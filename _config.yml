@@ -1,0 +1,7 @@
+repository: trasparente/vigilant-winner
+remote_theme: trasparente/help
+plugins:
+  - jekyll-remote-theme
+  - jekyll-coffeescript
+  - jekyll-default-layout
+  - jekyll-github-metadata
