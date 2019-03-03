@@ -1,7 +1,21 @@
+# for jekyll-github-metadata
 repository: trasparente/vigilant-winner
-remote_theme: trasparente/help
+
+# Plugins list
 plugins:
-  - jekyll-remote-theme
   - jekyll-coffeescript
   - jekyll-default-layout
   - jekyll-github-metadata
+
+# Exclude from _site
+exclude:
+  - README.md
+  - LICENSE
+
+# Output collection
+collections:
+  docs:
+    output: true
+
+# Timezone
+timezone: Europe/Rome

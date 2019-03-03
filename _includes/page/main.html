@@ -1,0 +1,13 @@
+<main class="container">
+  {% assign rows = content | split: "<!--row-->" %}
+  {%- for row in rows -%}
+  <div class="row">
+    {%- assign columns = row | split: "<!--column-->" -%}
+    {%- for column in columns -%}
+    <div class="col">
+      {{ column | strip }}
+    </div>
+    {% endfor %}
+  </div>
+  {%- endfor -%}
+</main>
