@@ -6,3 +6,9 @@ Minimum setup for remote_theme:
 - `index.md`
 
 Will be included `_includes`, `_layouts`, `_sass` and `assets` folders.
+
+[Quick ref jekyll md](https://gist.github.com/roachhd/779fa77e9b90fe945b0c)
+
+Bugs
+
+- [ ] style version online
