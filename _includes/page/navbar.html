@@ -9,7 +9,7 @@
         {%- assign html_pages = site.html_pages | sort: "weight" -%}
         {% for link in html_pages %}
         <li class="nav-item{% if page.url == link.url %} active{% endif %}">
-          <a class="nav-link" href="{{ link.url }}">{{ link.title | default: "Home" }}{% if page.url == link.url %}<span class="sr-only">(current)</span>{% endif %}</a>
+          <a class="nav-link" href="{{ link.url | relative_url }}">{{ link.title | default: "Home" }}{% if page.url == link.url %}<span class="sr-only">(current)</span>{% endif %}</a>
         </li>
         {% endfor %}
 
@@ -23,7 +23,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarTop{{ dropdown.label }}">
             {%- assign collection_pages = dropdown.docs | sort: "weight" -%}
             {% for link in collection_pages %}
-            <a class="dropdown-item{% if page.url == link.url %} active{% endif %}" href="{{ link.url }}">{{ link.title }}{% if page.url == link.url %} <span class="sr-only">(current)</span>{% endif %}</a>
+            <a class="dropdown-item{% if page.url == link.url %} active{% endif %}" href="{{ link.url | relative_url }}">{{ link.title }}{% if page.url == link.url %} <span class="sr-only">(current)</span>{% endif %}</a>
             {% endfor %}
           </div>
         </li>
