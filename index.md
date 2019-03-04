@@ -7,6 +7,7 @@
 # JSON Schema
 
 - <https://cswr.github.io/JsonSchema/spec/semantics/>
+- <http://json-schema.org/understanding-json-schema>
 
 Let S be a JSON schema, k be a key:value pair in S and J a JSON document.
 
@@ -21,6 +22,7 @@ Let S be a JSON schema, k be a key:value pair in S and J a JSON document.
 - k is `type`: `object` and J is an object.
 - k is `type: [t1, ... ,tn]` and the type of J is ti for some ti in { t1, ..., tn }.
 - k is `enum`: [j1, ... ,jn] and J = ji for some ji in { j1, ..., jn }.
+- k is `const`: restrict a value to a single value.
 
 **Strings Restrictions**
 
@@ -72,10 +74,30 @@ Let S be a JSON schema, k be a key:value pair in S and J a JSON document.
 
 **Metadata**
 
-- `$schema` keyword specifies the version of specification of JSON Schema.
+- `$schema` keyword declare a SJON schema and optionally specifies the version of specification of JSON Schema (`"$schema": "http://json-schema.org/schema#"`).
 - `title` keyword give a name to the schema.
 - `description` keyword give a short description of what kind of documents the schema accepts.
 - `default` keyword specify a default value for the document if a validator reads a missing value as input.
+
+**Conditional subschemas**
+
+The `if`, `then` and `else` keywords allow the application of a subschema based on the outcome of another schema.
+
+```json
+"if": {
+  "properties": { "country": { "const": "United States of America" } }
+},
+"then": {
+  "properties": { "postal_code": { "pattern": "[0-9]{5}(-[0-9]{4})?" } }
+},
+"else": {
+  "properties": { "postal_code": { "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]" } }
+}
+```
+
+**Reference**
+
+- `$ref` (the only key in an object) is a URI with a JSON Poniter fragment (`"$ref": "#/definitions/address"`).
 
 # Github metadata
 
