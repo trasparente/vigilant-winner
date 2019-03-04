@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <div class="{% include filter/fluid.html %}">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTop">
+      <ul class="navbar-nav mr-auto">
+        {%- assign html_pages = site.html_pages | sort: "weight" -%}
+        {% for link in html_pages %}
+        <li class="nav-item{% if page.url == link.url %} active{% endif %}">
+          <a class="nav-link" href="{{ link.url }}">{{ link.title | default: "Home" }}{% if page.url == link.url %}<span class="sr-only">(current)</span>{% endif %}</a>
+        </li>
+        {% endfor %}
+
+        {%- assign sorted_collections = site.collections | sort: "weight" -%}
+        {% for dropdown in sorted_collections %}
+        {% if dropdown.docs.size > 0 %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle{% if page.collection == dropdown.label %} active{% endif %}" href="#" id="navbarTop{{ dropdown.label }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ dropdown.label | capitalize }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarTop{{ dropdown.label }}">
+            {%- assign collection_pages = dropdown.docs | sort: "weight" -%}
+            {% for link in collection_pages %}
+            <a class="dropdown-item{% if page.url == link.url %} active{% endif %}" href="{{ link.url }}">{{ link.title }}{% if page.url == link.url %} <span class="sr-only">(current)</span>{% endif %}</a>
+            {% endfor %}
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-sm btn-light my-2 my-sm-0">Login</button>
+      </form>
+    </div>
+  </div>
+</nav>

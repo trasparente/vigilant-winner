@@ -1,0 +1,6 @@
+{%- assign words = include.string | replace: '-', ' ' | replace: '_', ' ' | split: ' ' -%}
+{%- for word in words -%}
+  {%- if forloop.first -%}
+{{ word | capitalize }}{%- unless forloop.last -%} {%- endunless -%}{% else %}
+{{ word }}{%- unless forloop.last -%} {%- endunless -%}{% endif %}
+{%- endfor -%}

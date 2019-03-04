@@ -107,4 +107,4 @@ Updated only on build
 
 - `contributors`: user with pull request merged but does not have collaborator access (size = {{ site.github.contributors.size }}).
 - `is_user_page`, `is_project_page`, `organization_members`: an organization will have at least one member ({{ site.github.is_user_page | inspect }} {{ site.github.is_project_page | inspect }} {{ site.github.organization_members | inspect }}).
-- `public_repositories`: filtering the repositories and taking the first element you get `fork`, `forks`, `watchers`, `updated_at`{% assign condition = "item.html_url == '" | append: site.github.repository_url | append: "'" %}{% assign repository =  site.github.public_repositories | where_exp: "item", condition | first %} ({{ repository.fork }} {{ repository.forks }} {{ repository.watchers }} {{ repository.updated_at | date_to_rfc822 }})
+- `public_repositories`: filtering the repositories and taking the first element you get `fork`, `forks`, `watchers`, `updated_at` ({{ repository.fork }} {{ repository.forks }} {{ repository.watchers }} {{ repository.updated_at | date_to_rfc822 }})

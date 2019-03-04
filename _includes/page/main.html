@@ -1,4 +1,4 @@
-<main class="container">
+<main class="{% include filter/fluid.html %}">
   {% assign rows = content | split: "<!--row-->" %}
   {%- for row in rows -%}
   <div class="row">

@@ -1,6 +1,9 @@
 # for jekyll-github-metadata
 repository: trasparente/vigilant-winner
 
+# To have /collection/page/ links
+permalink: pretty
+
 # Plugins list
 plugins:
   - jekyll-coffeescript
@@ -16,6 +19,13 @@ exclude:
 collections:
   docs:
     output: true
+
+# Set default layout in collections
+defaults:
+  - scope:
+      type: docs
+    values:
+      layout: default
 
 # Timezone
 timezone: Europe/Rome
