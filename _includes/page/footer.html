@@ -1,0 +1,21 @@
+<footer class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="{% include filter/fluid.html %}">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBottom" aria-controls="navbarBottom" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarBottom">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ site.github.repository_url }}">GitHub</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <span class="navbar-text">
+          version {{ site.github.latest_release.tag_name | default: '-' }}&nbsp;
+          updated {{ repository.updated_at | date: "%F/%T" }}
+        </span>
+      </ul>
+    </div>
+  </div>
+</footer>

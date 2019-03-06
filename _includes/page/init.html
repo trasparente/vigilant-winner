@@ -1,2 +1,1 @@
-{%- assign condition = "item.html_url == '" | append: site.github.repository_url | append: "'" -%}
-{%- assign repository =  site.github.public_repositories | where_exp: "item", condition | first -%}
+{%- include load/repository.html -%}

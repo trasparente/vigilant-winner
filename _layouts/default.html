@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 
+{% include page/init.html %}
 {% include page/meta.html %}
 {% include page/stylesheet.html %}
 {% include page/favicons.html %}
@@ -11,8 +12,10 @@
 </head>
   <body class="{{ page.title | slugify }}"
     data-version="{{ site.github.latest_release.tag_name | default: '-' }}"
-    data-updated="{{ repository | date_to_rfc822 }}">
+    data-updated="{{ repository.updated_at | date: '%F/%T' }}">
 {% include page/navbar.html %}
 {% include page/main.html %}
+{% include modal/login.html %}
+{% include page/footer.html %}
   </body>
 </html>

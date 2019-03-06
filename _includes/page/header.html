@@ -1,6 +1,6 @@
 <!-- Header -->
 <header>
-	<div class="container{% if page.fluid %}-fluid{% endif %}">
+	<div class="{% include filter/fluid.html %}">
 		<h1>{% include unslug.html string=site.title %}<span> / {{ page.title }}</span></h1>
 	</div>
 </header>

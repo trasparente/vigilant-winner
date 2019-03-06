@@ -1,13 +1,28 @@
 //
 // CUSTOM
 //
+
+// Add scrollbar
 html
-  overflow-y: scroll
-body
-  // Put navbar fixed-top
-  padding-top: 3.5em
+  //overflow-y: scroll
+  @extend .bg-light
+
 main
   // Add vertical padding
   @extend .py-4
-.nav-link
+
+#navbarTop .nav-link
   font-weight: bold
+
+// Put navbar fixed-top
+body
+  padding-top: 3.5em
+
+// Code
+pre.highlight
+  @extend .p-2, .bg-light
+  white-space: pre-wrap
+
+// Login
+a[data-target="#loginModal"]
+  outline: none
