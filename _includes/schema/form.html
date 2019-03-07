@@ -1,0 +1,24 @@
+{% for keyword in include.schema %}
+- {{ keyword | inspect }}
+{% endfor %}
+
+<form class="card card-body mb-4 schema-form">
+  <h4>{{ include.schema.title | default: "Form" }}</h4>
+  {%- if include.schema.description -%}<p class="text-muted">{{ include.schema.description }}</p>{%- endif -%}
+  {%- for property in include.schema.properties -%}
+    {% assign default_title = property[0] %}
+    {% assign current_property = property[1] %}
+    {% if current_property.type == 'array' and current_property.items %}
+      {%- include schema/input.html p=current_property.items t=default_title i=1 -%}
+    {% else %}
+      {%- include schema/input.html p=current_property t=default_title -%}
+    {% endif %}
+  {%- endfor -%}
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <div class="form-group mb-0">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>

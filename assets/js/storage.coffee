@@ -1,5 +1,5 @@
 ###
-  Store an object in `localStorage`, LZ compressed to Base 64. The key si the string {{ site.github.repository_url }}{{ site.url }}
+  Store an object in `localStorage`, LZ compressed to Base 64. The key si the string {{ site.github.repository_url }}{{ page.url | absolute_url }}
   @example
   // Initialize storage in localStorage, called the first `get` or `set`
   storage.init()
@@ -18,12 +18,12 @@
 ###
 storage = {
   key: () ->
-    return  '{{ site.github.repository_url }}{{ site.url }}'
+    return  '{{ site.github.repository_url }}{{ page.url | absolute_url }}'
   init: () ->
     if !localStorage.getItem(storage.key())? then storage.store {
       "created": new Date()
       "version": '{{ site.github.latest_release.tag_name }}'
-      "url": '{{ site.url }}'
+      "url": '{{ page.url | absolute_url }}'
       "repository": '{{ site.github.repository_url }}'
     }
     true

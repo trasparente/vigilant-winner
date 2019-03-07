@@ -1,0 +1,18 @@
+{%- assign id = include.t | default: include.p.title | slugify -%}
+{%- assign default_title = id | capitalize -%}
+{%- if include.i -%}{% assign id = id | append: ".0" %}{%- endif -%}
+{%- assign pTitle = include.p.title | default: default_title -%}
+{%- assign pDescription = include.p.description -%}
+{% case include.p.type %}
+  {% when 'string' or nil %}
+    {%- assign pType = "text" -%}
+  {% when 'number' or 'integer' %}
+    {%- assign pType = "number" -%}
+  {% else %}
+    {%- assign pType = "unknow" -%}
+{% endcase %}
+<div class="form-group">
+  <label for="{{ id }}">{{ pTitle }}{% if include.i %}<a href="#" data-add="{{ include.i }}" class="btn btn-sm btn-secondary ml-2" role="button">+</a>{% endif %}</label>
+  <input type="{{ pType }}" class="form-control" id="{{ id }}" aria-describedby="{{ id }}Help" aria-label="">
+  <small id="{{ id }}Help" class="form-text text-muted">{{ pDescription }}</small>
+</div>

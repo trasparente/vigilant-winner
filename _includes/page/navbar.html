@@ -14,7 +14,7 @@
         {% endfor %}
 
         {%- assign sorted_collections = site.collections | sort: "weight" -%}
-        {% for dropdown in sorted_collections %}
+        {%- for dropdown in sorted_collections -%}
         {% if dropdown.docs.size > 0 %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle{% if page.collection == dropdown.label %} active{% endif %}" href="#" id="navbarTop{{ dropdown.label }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,7 +28,7 @@
           </div>
         </li>
         {% endif %}
-        {% endfor %}
+        {%- endfor -%}
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">

@@ -1,5 +1,76 @@
 ---
+event:
+  title: Event
+  properties:
+    title:
+      type: string
+      description: Title of the event
+    datetime:
+      oneOf:
+        - $ref: "#/definitions/unix"
+        - $ref: "#/definitions/array"
+    repetition:
+      $ref: "#/definitions/repetition"
+  definitions:
+    repetition:
+      type: object
+      description: Define a time quantity
+      properties:
+        number:
+          type: number
+        unit:
+          enum: [ second, hour, week, day, month, year ]
+    unix:
+      type: number
+      format: unix
+      description: Unix time, number of seconds from 1/1/1970 utc
+    array:
+      type: array
+      description: List of dates
+      items:
+        $ref: "#/definitions/unix"
+basic:
+  title: Titolo
+  description: Descrizione
+  properties:
+    zio:
+      type: string
+      title: Prop 1
+      description: Desc 1
+    num:
+      type: number
+    arr:
+      type: array
+      items:
+        type: number
 ---
+
+- [Validator](https://json-schema-validator.herokuapp.com/)
+
+# Event
+
+{% include schema/preview.html schema=page.event title="Event schema" %}
+{% include schema/form.html schema=page.basic %}
+
+**Examples**
+
+- Plastica, on date (week-day), every 2 weeks
+- Revisione, on date (month-day), every year
+  - Pasqua
+- Visita, date-time, once
+- Timer, on time, once
+- Alarm, on time, [ week-day, week-day, ... ]
+- Diary, [ date, date , ... ]
+
+**OneOf**
+
+- array of dates
+- time/date-time/date, repetition/once
+
+**Repetition**
+
+- number, unit
+
 # JSON Schema
 
 - <https://cswr.github.io/JsonSchema/spec/semantics/>

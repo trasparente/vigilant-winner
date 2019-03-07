@@ -1,14 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-
 {% include page/init.html %}
 {% include page/meta.html %}
 {% include page/stylesheet.html %}
 {% include page/favicons.html %}
 {% include page/social.html %}
 {% include page/javascript.html %}
-
 </head>
   <body class="{{ page.title | slugify }}"
     data-version="{{ site.github.latest_release.tag_name | default: '-' }}"
