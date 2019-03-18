@@ -20,12 +20,17 @@ collections:
   docs:
     output: true
 
-# Set default layout in collections
 defaults:
+  # Set default layout in collections
   - scope:
       type: docs
     values:
       layout: default
+  # Turn off page header
+  - scope:
+      path: ""
+    values:
+      header: false
 
 # Timezone
 timezone: Europe/Rome

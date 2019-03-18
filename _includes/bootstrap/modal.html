@@ -12,7 +12,8 @@
         </button>
       </div>
       <div class="modal-body">
-        {{ include.md | markdownify }}
+        {% if include.md %}{{ include.md | markdownify }}{% endif %}
+        {% if include.page %}{% capture md %}{% include {{ include.page }} %}{% endcapture %}{{ md | markdownify }}{% endif %}
       </div>
       {% if include.form %}
       <div class="modal-footer">

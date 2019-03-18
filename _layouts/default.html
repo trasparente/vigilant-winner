@@ -8,12 +8,11 @@
 {% include page/javascript.html %}
 </head>
   <body class="{{ page.title | slugify | default: 'home' }}">
+{% if page.header != false %}{% include page/header.html %}{% endif %}
 {% include page/navbar.html %}
 {% include page/main.html %}
-{% capture login %}{% include page/login-form.html %}{% endcapture %}
-{% include bootstrap/modal.html id="loginModal" md=login large=true title="Login" form=true submit="Login" %}
-{% capture info %}{% include page/info.html %}{% endcapture %}
-{% include bootstrap/modal.html id="infoModal" md=info large=true title="Info" %}
+{% include bootstrap/modal.html id="loginModal" page="page/login-form.html" large=true title="Login" form=true submit="Login" %}
+{% include bootstrap/modal.html id="infoModal" page="page/info.html" large=true title="Info" %}
 {% include page/footer.html %}
   </body>
 </html>

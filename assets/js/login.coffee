@@ -1,7 +1,7 @@
 ###
   Need:
   - Bootstrap modal id="loginModal"
-  - Form id="loginForm" with a type="submit" <button> and a div.invalid-feedback
+  - Form id="loginModalContent" with a type="submit" <button> and a div.invalid-feedback
   - Login link with data-toggle="modal" and data-target="#loginModal"
   - Token input id="personalToken"
 ###
@@ -32,7 +32,11 @@ login = {
       headers: {"Authorization": "token #{login.token.val()}"}
       success: login.success
       error: login.error
+      complete: login.complete
     true
+  complete: (request, status) ->
+    login.submit.prop "disabled", false
+    login.spinner.addClass "d-none"
   success: (data, status) ->
     login.modal.modal "hide"
     storage.set "token", login.token.val()
@@ -51,9 +55,7 @@ login = {
     true
   error: (request, status, error) ->
     login.feedback.html "#{status}: #{error}"
-    login.token.addClass("is-invalid")
-    login.submit.prop "disabled", false
-    login.spinner.addClass 'd-none'
+    login.token.addClass "is-invalid"
     true
   logout: (e) ->
     e.preventDefault()
