@@ -1,4 +1,6 @@
-{% assign github = site.github %}
+{%- assign github = site.github -%}
+{%- assign repository = github.public_repositories | where: "html_url", github.repository_url | first -%}
+{%- assign release = github.releases | first -%}
 - **Page**
   - link [`{{ page.url | absolute_url }}`]({{ page.url | absolute_url }})
   - github_link [`{{ github.repository_nwo | append: "/blob/" | append: repository.default_branch | append: "/" | append: page.path }}`]({% include filter/github_link.html page=page %})

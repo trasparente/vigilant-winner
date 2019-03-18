@@ -4,7 +4,7 @@
 <!-- Modal -->
 <div class="modal {% if include.fade %}fade{% endif %}" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}Label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered {% if include.large %}modal-lg{% endif %}" role="document">
-    <div class="modal-content" id="{{ id }}Content">
+    <{% if include.form %}form{% else %}div{% endif %} class="modal-content" id="{{ id }}Content">
       <div class="modal-header">
         <h5 class="modal-title" id="{{ id }}Label">{{ include.title | default: "Title" }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,14 +14,16 @@
       <div class="modal-body">
         {{ include.md | markdownify }}
       </div>
-      {%- if include.footer -%}
+      {% if include.form %}
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">
-          <span class="spinner-border spinner-border-sm mr-2 d-none" role="status" aria-hidden="true"></span>OK
+          <span class="spinner-border spinner-border-sm mr-2 d-none" role="status" aria-hidden="true"></span>{{ include.submit | default: "OK" }}
         </button>
       </div>
-      {%- endif -%}
+    </form>
+      {% else %}
     </div>
+      {% endif %}
   </div>
 </div>

@@ -11,11 +11,17 @@ main
   // Add vertical padding
   @extend .py-4
 
+// Navbars
+#navigation
+  @extend .navbar-dark, .bg-primary, .fixed-top
 #navbarTop .nav-link
   font-weight: bold
+footer
+  @extend .navbar-light, .bg-light
 
 // Put navbar fixed-top
 body
+  // body line height (1.5), .navbar and .nav-link vertical padding (1 each)
   padding-top: 3.5em
 
 // Code

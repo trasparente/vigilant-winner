@@ -4,7 +4,7 @@
 # Includes
 {% include_relative js/storage.coffee %}
 {% include_relative js/login.coffee %}
-{% include_relative js/form.coffee %}
+{% include_relative js/form1.coffee %}
 
 # Tooltips are opt-in
 $('[data-toggle*="tooltip"]').tooltip()

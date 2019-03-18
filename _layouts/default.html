@@ -1,19 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-{% include page/init.html %}
 {% include page/meta.html %}
 {% include page/stylesheet.html %}
 {% include page/favicons.html %}
 {% include page/social.html %}
 {% include page/javascript.html %}
 </head>
-  <body class="{{ page.title | slugify }}"
-    data-version="{{ site.github.latest_release.tag_name | default: '-' }}"
-    data-updated="{{ repository.updated_at | date: '%F/%T' }}">
+  <body class="{{ page.title | slugify | default: 'home' }}">
 {% include page/navbar.html %}
 {% include page/main.html %}
-{% include modal/login.html %}
+{% capture login %}{% include page/login-form.html %}{% endcapture %}
+{% include bootstrap/modal.html id="loginModal" md=login large=true title="Login" form=true submit="Login" %}
 {% capture info %}{% include page/info.html %}{% endcapture %}
 {% include bootstrap/modal.html id="infoModal" md=info large=true title="Info" %}
 {% include page/footer.html %}

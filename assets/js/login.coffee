@@ -6,13 +6,13 @@
   - Token input id="personalToken"
 ###
 login = {
-  form: $ '#loginForm'
+  form: $ '#loginModalContent'
   modal: $ '#loginModal'
   token: $ '#personalToken'
   link: $ "[data-target='#loginModal']"
-  submit: $ "#loginForm button[type='submit']"
-  spinner: $ "#loginForm button[type='submit'] span[class*='spinner']"
-  feedback: $ "#loginForm .invalid-feedback"
+  submit: $ "#loginModalContent button[type='submit']"
+  spinner: $ "#loginModalContent button[type='submit'] span[class*='spinner']"
+  feedback: $ "#loginModalContent .invalid-feedback"
   init: () ->
     login.form.on "submit", login.serve
     if storage.get('token') and login.link.text() == "Login"
