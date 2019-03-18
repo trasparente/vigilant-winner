@@ -1,4 +1,4 @@
 ---
 ---
 
-
+{% include page/info.html %}

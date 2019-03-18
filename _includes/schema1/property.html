@@ -1,0 +1,30 @@
+{% assign current_property = include.prop[1] %}
+{% assign type = 'unknow' %}
+{% assign file = 'input' %}
+{% assign _prop = include.prop %}
+{% assign last_level = include.root | split: "." | shift | first %}
+{%- if last_level == include.prop[0] -%}
+  {% assign root = include.root | append: ".0" %}
+{%- else -%}
+  {% assign root = include.root | append: "." | append: include.prop[0] %}
+{%- endif -%}
+{% if current_property.ref %}
+  {% assign path = current_property.ref | remove: "#/" | split: "/" %}
+  {% assign _prop = include.schema %}
+  {%- for i in path -%}{% assign _prop = _prop[i] %}{%- endfor -%}
+  {% assign current_property = _prop %}
+  {% assign _prop = "" | split: "" | push: include.prop[0] | push: _prop %}
+{% endif %}
+{% if current_property.type == 'string' %}
+  {% assign type = 'text' %}
+{% elsif current_property.type == 'number' or current_property.type == "integer" %}
+  {% assign type = 'number' %}
+{% elsif current_property.type == 'boolean' %}
+  {% assign type = 'checkbox' %}
+  {% assign file = 'checkbox' %}
+{% elsif current_property.type == 'object' %}
+  {% assign file = 'object' %}
+{% elsif current_property.type == 'array' and current_property.items %}
+  {% assign file = 'array' %}
+{% endif %}
+{%- include schema1/{{ file }}.html p=_prop t=type r=root s=include.schema -%}

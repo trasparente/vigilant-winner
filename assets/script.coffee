@@ -11,9 +11,8 @@ $('[data-toggle*="tooltip"]').tooltip()
 
 console.log storage.get()
 
-# json preview
-# Preview stand alone
-$('.jsonPreview').each ->
+# json preview stringify format with tabs
+$('.jsonPreview.collapse').each ->
   code = $(@).find 'code'
   code.html JSON.stringify(JSON.parse(code.html()), null, 2)
   true

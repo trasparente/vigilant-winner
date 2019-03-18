@@ -14,6 +14,8 @@
 {% include page/navbar.html %}
 {% include page/main.html %}
 {% include modal/login.html %}
+{% capture info %}{% include page/info.html %}{% endcapture %}
+{% include bootstrap/modal.html id="infoModal" md=info large=true title="Info" %}
 {% include page/footer.html %}
   </body>
 </html>

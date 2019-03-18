@@ -1,0 +1,13 @@
+{% assign schema = include.schema %}
+{% assign path = "" | split: "" %}
+<form class="card mb-4 schema-form">
+  {% include schema1/header.html title=schema.title description=schema.description %}
+  <div class="card-body">
+    {% for p in schema.properties %}
+    {% include schema1/property1.html prop=p %}
+    {% endfor %}
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>

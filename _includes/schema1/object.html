@@ -1,0 +1,9 @@
+{% assign current_property = include.p[1] %}
+<div class="card card-body">
+  {%- assign slugged = include.p[0] | capitalize -%}
+  {% capture default_title %}{%- include filter/unslug.html string=slugged -%}{% endcapture %}
+  <h4>{{ current_property.title | default: default_title }}</h4>{%- if current_property.description -%}<p class="text-muted">{{ current_property.description }}</p>{%- endif -%}
+{%- for property in current_property.properties -%}
+  {%- include schema1/property.html prop=property root=include.r schema=include.s -%}
+{%- endfor -%}
+</div>

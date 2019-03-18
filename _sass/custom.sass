@@ -23,6 +23,40 @@ pre.highlight
   @extend .p-2, .bg-light
   white-space: pre-wrap
 
-// Login
-a[data-target="#loginModal"]
+// Tables
+table
+  @extend .table
+
+// Outline on links
+a
   outline: none
+  &.jsonPreview
+    color: $body-color
+    text-decoration: none
+    &[aria-expanded="false"]:before
+      content: "►"
+    &[aria-expanded="true"]:before
+      content: "▼"
+
+// FORM
+
+// header
+.card-header p:first-child
+  @extend .mb-0
+
+// remove bottom margin of last child
+.card-body
+  & > *:last-child
+    @extend .mb-0
+  & > .card:not(:last-child)
+    @extend .mb-4
+
+// Checkbox pointer
+.form-check-label, input[type="checkbox"]
+  cursor: pointer
+
+// Add button
+a[data-add]
+  line-height: 1em
+  font-weight: bold
+  @extend .btn-sm, .btn-secondary, .ml-2

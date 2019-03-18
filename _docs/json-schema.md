@@ -33,24 +33,49 @@ basic:
   title: Titolo
   description: Descrizione
   properties:
-    zio:
+    minimal:
       type: string
-      title: Prop 1
-      description: Desc 1
-    num:
-      type: number
-    arr:
+    numeric_array:
+      type: array
+      title: Lista
+      description: items
+      items:
+        ref: "#/definitions/inception"
+    object:
+      type: object
+      description: Un oggetto
+      properties:
+        person:
+          ref: "#/definitions/inception"
+        bool:
+          ref: "#/definitions/checkbox"
+    sequenza:
       type: array
       items:
-        type: number
+        title: Step
+        type: string
+  definitions:
+    checkbox:
+      title: Boolean
+      type: boolean
+      description: Checkboxa
+    inception:
+      title: Inception
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: number
 ---
+
+{% include schema1/form1.html schema=page.basic %}
 
 - [Validator](https://json-schema-validator.herokuapp.com/)
 
 # Event
 
-{% include schema/preview.html schema=page.event title="Event schema" %}
-{% include schema/form.html schema=page.basic %}
+{% include bootstrap/collapsible.html schema=page.basic title="Event schema" %}
 
 **Examples**
 
@@ -89,7 +114,7 @@ Let S be a JSON schema, k be a key:value pair in S and J a JSON document.
 - k is `type`: `object` and J is an object.
 - k is `type: [t1, ... ,tn]` and the type of J is ti for some ti in { t1, ..., tn }.
 - k is `enum`: [j1, ... ,jn] and J = ji for some ji in { j1, ..., jn }.
-- k is `const`: restrict a value to a single value.
+- k is `const`: restrict a value to a constant.
 
 **Strings Restrictions**
 

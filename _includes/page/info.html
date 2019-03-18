@@ -1,0 +1,32 @@
+{% assign github = site.github %}
+- **Page**
+  - link [`{{ page.url | absolute_url }}`]({{ page.url | absolute_url }})
+  - github_link [`{{ github.repository_nwo | append: "/blob/" | append: repository.default_branch | append: "/" | append: page.path }}`]({% include filter/github_link.html page=page %})
+  - environment `{{ github.environment }}`
+  - title `{{ page.title }}`
+  - name `{{ page.name }}`
+  - url `{{ page.url }}`
+  - path `{{ page.path }}`
+  - dir `{{ page.dir }}`
+- **Version**
+  - build_revision `{{ github.build_revision | truncate: 7, "" }}`
+  - updated_at `{{ repository.updated_at }}`
+  - tag_name `{{ release.tag_name }}`
+  - name `{{ release.name }}`
+  - draft `{{ release.draft }}`
+  - prerelease `{{ release.prerelease }}`
+- **Type**
+  - is_user_page `{{ github.is_user_page }}`
+  - is_project_page `{{ github.is_project_page }}`
+  - fork `{{ repository.fork }}`
+- **Project**
+  - repository [`{{ github.repository_nwo }}`]({{ github.repository_url }})
+  - homepage [`{{ repository.homepage }}`]({{ repository.homepage }})
+  - default_branch `{{ repository.default_branch }}`
+  - language `{{ repository.language }}`
+  - size `{{ repository.size }}`
+- **GitHub**
+  - organization_members `{{ github.organization_members.size }}`
+  - contributors `{{ github.contributors.size }}`
+  - forks_count `{{ repository.forks_count }}`
+  - stargazers_count `{{ repository.stargazers_count }}`

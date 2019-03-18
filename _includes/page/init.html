@@ -1,2 +1,4 @@
-{%- include load/repository.html -%}
+{%- assign github = site.github -%}
+{%- assign repository = github.public_repositories | where: "html_url", github.repository_url | first -%}
+{%- assign release = github.releases | first -%}
 {%- assign counter = 0 -%}

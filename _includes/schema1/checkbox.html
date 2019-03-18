@@ -1,0 +1,7 @@
+{%- assign slugged = include.p[0] | capitalize -%}
+{% capture default_title %}{%- include filter/unslug.html string=slugged -%}{% endcapture %}
+<div class="form-group form-check">
+  <input type="{{ include.t }}" class="form-check-input" id="{{ include.r }}" aria-describedby="{{ include.r }}Help" aria-label="{{ include.p[0] }}">
+  <label for="{{ include.r }}" class="form-check-label">{{ include.p[1].title | default: default_title }}</label>
+  <small id="{{ include.r }}Help" class="form-text text-muted">{{ include.p[1].description }}</small>
+</div>

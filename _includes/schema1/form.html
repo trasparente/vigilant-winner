@@ -1,0 +1,12 @@
+{% assign schema = include.schema %}
+<form class="card card-body mb-4 schema-form">
+  <h4>{{ include.schema.title | default: "Form" }}</h4>
+  {%- if include.schema.description -%}<p class="text-muted">{{ include.schema.description }}</p>{%- endif -%}
+  {%- assign parent = 'root' -%}
+  {%- for property in include.schema.properties -%}
+    {%- include schema1/property.html prop=property root=parent schema=include.schema -%}
+  {%- endfor -%}
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
