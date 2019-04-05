@@ -5,7 +5,7 @@
   - link [`{{ page.url | absolute_url }}`]({{ page.url | absolute_url }})
   - github_link [`{{ github.repository_nwo | append: "/blob/" | append: repository.default_branch | append: "/" | append: page.path }}`]({% include filter/github_url.html page=page %})
   - environment `{{ github.environment }}`
-  - title `{{ page.title | inspect }}`
+  - title `{{ page.title }}`
   - name `{{ page.name }}`
   - url `{{ page.url }}`
   - path `{{ page.path }}`
@@ -13,10 +13,10 @@
 - **Version**
   - build_revision `{{ github.build_revision | truncate: 7, "" }}`
   - updated_at `{{ repository.updated_at }}`
-  - tag_name `{{ release.tag_name | inspect }}`
-  - name `{{ release.name | inspect }}`
-  - draft `{{ release.draft | inspect }}`
-  - prerelease `{{ release.prerelease | inspect }}`
+  - tag_name `{{ release.tag_name }}`
+  - name `{{ release.name }}`
+  - draft `{{ release.draft }}`
+  - prerelease `{{ release.prerelease }}`
 - **Type**
   - is_user_page `{{ github.is_user_page }}`
   - is_project_page `{{ github.is_project_page }}`
@@ -28,10 +28,10 @@
   - language `{{ repository.language }}`
   - size `{{ repository.size }}`
 - **GitHub**
-  - organization_members size `{{ github.organization_members.size | inspect }}`
+  - organization_members size `{{ github.organization_members.size }}`
   - contributors `{{ github.contributors.size }}`
   - forks_count `{{ repository.forks_count }}`
   - stargazers_count `{{ repository.stargazers_count }}`
 - **Remote theme**
-  - `{{ site.remote_theme | inspect }}`
+  - `{{ site.remote_theme }}`
   - version `{% include version.html %}`

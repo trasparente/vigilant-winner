@@ -3,7 +3,7 @@
 // Mixin with pre-scope and condition
 //--------------------------------------
 
-@mixin headings($condition: '', $prescope: '')
+@mixin headings($prescope: '', $condition: '')
   @for $i from 1 through 6
     #{$prescope}h#{$i}#{$condition}, #{$prescope}.h#{$i}#{$condition}
       @content

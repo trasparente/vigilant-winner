@@ -49,7 +49,7 @@ login = {
       .off "click"
       .on "click", login.logout
     setTimeout ->
-      login.link.tooltip "hide"
+      login.link.tooltip "dispose"
       login.token.val ""
     , 3000
     true
