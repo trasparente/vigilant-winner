@@ -2,11 +2,11 @@
 ---
 
 # Includes
-{% include_relative js/storage.coffee %}
-{% include_relative js/login.coffee %}
-{% include_relative js/modal_alert.coffee %}
-{% include_relative js/commit.coffee %}
-{% include_relative js/form.coffee %}
+{% include scripts/storage.coffee %}
+{% include scripts/login.coffee %}
+{% include scripts/modal_alert.coffee %}
+{% include scripts/commit.coffee %}
+{% include scripts/form.coffee %}
 
 # Tooltips are opt-in
 $('[data-toggle*="tooltip"]').tooltip()
