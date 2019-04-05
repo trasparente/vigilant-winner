@@ -1,0 +1,10 @@
+properties:
+  name: true
+  age:
+    pool:
+      ref: pools.quota
+    max: 100
+  email:
+    type: email
+  website:
+    type: url

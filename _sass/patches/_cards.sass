@@ -1,0 +1,14 @@
+.card
+  // Remove bottom margin from last child
+  .card-body,
+  .card-footer
+    & :last-child
+      @extend .mb-0
+
+// Add bottom margin after a card
+.accordion
+  @extend .mb-4
+
+// .card:empty
+  // Add vertical padding
+  // @extend .mb-4

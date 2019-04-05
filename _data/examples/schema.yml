@@ -1,0 +1,28 @@
+properties:
+  person:
+    expanded: false
+    schema: examples.person
+  date_time:
+    expanded: false
+    schema: examples.datetime
+  booleans:
+    expanded: false
+    schema: examples.booleans
+  miscellanea:
+    expanded: false
+    schema: examples.miscellanea
+  selects:
+    expanded: false
+    schema: examples.selects
+  watch:
+    expanded: false
+    schema: examples.watch
+  eval_and_templates:
+    expanded: false
+    schema: examples.eval
+  pools:
+    expanded: false
+    schema: examples.pools
+  items:
+    expanded: false
+    items: examples.person

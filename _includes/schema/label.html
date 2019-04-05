@@ -1,0 +1,5 @@
+{% if "range checkbox radio" contains p.type %}
+<div class="col-sm-{{ label_width }}" id="{{ field_id }}_label" {% if p.description or p.units %}data-toggle="tooltip" title="{{ p.description }} {{ p.units }}"{% endif %}>{{ title }}{% if p.type == "range" %} <span></span>{% endif %}</div>
+{% else %}
+<label for="{{ field_id }}" class="col-sm-{{ label_width }} col-form-label" aria-label="{{ title }}" {% if p.description or p.units %}data-toggle="tooltip" title="{{ p.description }} {{ p.units }}"{% endif %}>{{ title }}</label>
+{% endif %}

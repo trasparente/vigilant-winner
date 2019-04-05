@@ -1,0 +1,5 @@
+properties:
+  checkbox:
+    type: checkbox
+  radio:
+    type: radio

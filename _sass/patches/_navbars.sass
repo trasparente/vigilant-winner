@@ -1,0 +1,15 @@
+// Set default to `.navbar-light`
+
+.navbar
+  .nav-item,
+  .dropdown-item
+    font-weight: bold
+    text-transform: uppercase
+  .nav-link.active,
+  .nav-item.active a
+    color: $navbar-light-active-color
+  // Fix invisible toggler icon
+  .navbar-toggler-icon
+    background-image: $navbar-light-toggler-icon-bg
+  &:last-child
+    @extend .border-top

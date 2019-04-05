@@ -30,7 +30,7 @@ defaults:
   - scope:
       path: ""
     values:
-      header: false
+      header: true
 
 # Timezone
 timezone: Europe/Rome

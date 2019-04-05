@@ -1,0 +1,23 @@
+simple_array: [1, 2, 3]
+two_elements:
+  - [ 1, First ]
+  - [ 2, Second ]
+  - [ 3, Third ]
+optgroup:
+  - optgroup: Group 1
+  - Option 1.1
+  - Option 1.2
+  - optgroup: Group 2
+  - Option 2.1
+  - Option 2.2
+object_array:
+  - value: 1
+    title: Title 1
+    description: Description 1
+  - value: 2
+    title: Title 2
+    description: Description 2
+    selected: true
+  - value: 3
+    title: Title 3
+    description: Description 3

@@ -1,0 +1,71 @@
+{% if include.schema == nil %}
+{% include bootstrap/alert.html body="Schema not found" %}
+{% else %}
+{%- assign schema = include.schema -%}
+{% assign counter = counter| plus: 1 %}
+{% assign default_id = "schema" %}
+{% assign default_title = default_id | capitalize %}
+{% assign id = schema.title | default: default_id | slugify | append: "_" | append: counter %}
+{% assign title = schema.title | default: default_title %}
+{% assign label_width = include.label_width | default: 3 %}
+<div id="accordion_{{ id }}" class="accordion form-accordion">
+  <div class="card {{ schema.class | default: include.class }}">
+    <div class="card-header" id="heading_{{ id }}">
+      <a
+        href="#"
+        data-toggle="collapse"
+        data-target="#collapse_{{ id }}"
+        aria-expanded="{% if schema.expanded != false and include.expanded != false %}true{% else %}false{% endif %}"
+        aria-controls="collapse_{{ id }}"
+        aria-label="{{ id }}">{{ title }}</a>
+    </div>
+    <div
+    id="collapse_{{ id }}"
+    class="collapse {% if schema.expanded != false and include.expanded != false %}show{% endif %}"
+    aria-labelledby="heading_{{ id }}"
+    data-parent="#accordion_{{ id }}">
+      <form data-widget="form" data-schema="{{ title | slugify | replace: '-', '_' }}">
+        <fieldset>
+          <div class="card-body">
+            {% if schema.description %}{{ schema.description | markdownify }}{% endif %}
+            {%- assign path = "" | split: "" -%}
+            {% for prop in schema.properties %}
+              {% include schema/property.html property=prop %}
+            {% endfor %}
+            {%- comment -%} BUTTONS section {%- endcomment -%}
+            {% if include.preview or include.validate or include.reset or include.save != false %}<div class="form-group row">
+              <div class="col">{% endif %}
+                {%- comment -%} PREVIEW section {%- endcomment -%}
+                {% if include.preview %}
+                  {% include schema/preview.html %}
+                  <input class="btn" type="button" data-preview="true" value="Preview">
+                {% endif %}
+                {%- comment -%} VALIDATE section {%- endcomment -%}
+                {% if include.validate %}
+                  <input class="btn" type="button" data-validate="true" value="Validate">
+                {% endif %}
+                {%- comment -%} RESET section {%- endcomment -%}
+                {% if include.reset %}
+                  <input class="btn" type="reset">
+                {% endif %}
+                {%- comment -%} SAVE section {%- endcomment -%}
+                {% if include.save != false %}
+                  <input class="btn" type="submit" value="Save">
+                {% endif %}
+            {% if include.preview or include.validate or include.reset or include.save != false %}</div>
+              </div>{% endif %}
+          </div><!-- close card-body -->
+        </fieldset>
+      </form>
+    </div><!-- close collapsible -->
+  </div><!-- close card -->
+  <div class="card"></div><!-- patch for single accordion -->
+</div><!-- close accordion -->
+{% endif %}
+{% capture api %}schema object nil | Schema object or reference for the form
+expanded boolean true | Set main accordion initial expanded state
+preview boolean nil | Show preview area and button
+validate boolean nil | Show validate and button
+reset boolean nil | Show reset button
+save boolean true | Show save button
+label_width numeric 3 | Width of the label on a total of 12{% endcapture %}

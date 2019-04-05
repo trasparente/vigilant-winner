@@ -1,0 +1,12 @@
+properties:
+  simple_array:
+    options: examples.options.simple_array
+  two_elements:
+    options: examples.options.two_elements
+  optgroup:
+    options: examples.options.optgroup
+  object_array:
+    multiple: true
+    min: 1
+    max: 2
+    options: examples.options.object_array

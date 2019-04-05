@@ -1,0 +1,18 @@
+{% if include.file %}
+  {% capture load %}{% include {{ include.file }} %}{% endcapture %}
+  {% assign api_stack = api %}
+  {% assign file_name = include.file | split: '/' | last | remove: '.html' %}
+  {% capture file_title %}{% include filter/unslug.html string=file_name %}{% endcapture %}
+  {% assign file_path =	'_includes/' | append: include.file %}
+  {% capture github_url %}{% include filter/unslug.html string=file_path %}{% endcapture %}
+  {% assign api = api_stack %}
+- **File [{{ file_path }}]({{ github_url }})**  
+{% endif %}
+{%- assign rows = api | newline_to_br | strip_newlines | split: '<br />' -%}
+{% for row in rows %}{% unless row contains "|" %}- {{ row }}{% endunless %}
+{% endfor %}
+| Parameter | Type | Initial | Description |
+|:---|:---|:---|:---|:---|
+{% for row in rows %}
+{%- if row contains "|" -%}{% assign col = row | split: "|" %}{% assign values = col.first | split: " " %}| `{{ values[0] }}` | *{{ values[1] }}* | `{{ values[2] }}` | {{ col[1] }} |
+{% endif %}{% endfor %}

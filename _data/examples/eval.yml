@@ -1,0 +1,7 @@
+properties:
+  double_age:
+    eval: "#{person.age} * 2"
+    description: "eval: #{person.age} * 2"
+  summary:
+    template: "#{person.name} #{person.age}yo contact: #{person.email}"
+    description: "template: #{person.name} #{person.age}yo contact: #{person.email}"

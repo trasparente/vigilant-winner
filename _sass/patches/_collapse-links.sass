@@ -1,0 +1,12 @@
+// Normal collapse link
+*:not(.card-header) > a[data-toggle="collapse"]
+  color: $body-color
+  text-decoration: none
+  &[aria-expanded="false"]:before
+    content: "►"
+  &[aria-expanded="true"]:before
+    content: "▼"
+
+// Collapse link in card-header
+.card-header > a[data-toggle="collapse"]
+  color: $body-color

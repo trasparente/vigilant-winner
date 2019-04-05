@@ -1,0 +1,157 @@
+{% capture propertyWorkspace %}
+{% capture out %}{% endcapture %}
+{% comment %} -------------------- Settings -------------------- {% endcomment %}
+{%- assign p = include.property[1] -%}
+{% capture backup_title %}{% include filter/unslug.html string=include.property.first %}{% endcapture %}
+{%- assign title = include.property[1].title | default: backup_title -%}
+{%- assign label = title | slugify | replace: '-', '_' -%}
+{%- assign backup_title = schema.title | capitalize -%}
+{%- assign backup_description = backup_title | append: " " | append: include.property.first -%}
+{%- assign path = path | push: label -%}
+{%- assign field_id = path | join: '_' | append: '_' | append: forloop.index -%}
+{%- assign classic_fields = 'text number date color range checkbox radio time url email' -%}
+{% comment %}
+
+  SELECT
+
+{% endcomment %}
+{% if p.select != nil %}
+{% capture out %}
+  {% include schema/select.html options=p.select %}
+{% endcapture %}
+{%- comment -%}
+
+  INPUT
+
+{%- endcomment -%}
+{% elsif classic_fields contains p.type or (p.type == nil and p.properties == nil and p.select == nil and p.options == nil and p.items == nil and p.schema == nil) %}
+  {% capture out %}
+    <!-- <div class="input-group"> -->
+      {% include schema/field.html %}
+    {%- comment -%} Close input-group and form-control {%- endcomment -%}
+    <!-- </div> -->
+    <!-- close input-group -->
+{% endcapture %}
+{%- comment -%}
+
+  SVG
+
+{%- endcomment -%}
+{% elsif p.type == 'svg' %}
+{% capture out %}{% include {{ p.include }} svg=p %}{% endcapture %}
+{% endif %}
+{%- comment -%}
+
+  PROPERTIES
+
+{%- endcomment -%}
+{% if p.properties.size > 0 %}
+{% capture out %}
+  {% include schema/properties.html properties=p.properties parent=include.property %}
+{% endcapture %}
+{% endif %}
+{%- comment -%}
+
+  OPTIONS
+
+{%- endcomment -%}
+{% if p.options != nil %}
+{% capture out %}{{ out }}
+  {% if page[p.options] or site.data[p.options] %}
+    {%- assign options = page[p.options] | default: site[p.options] -%}
+    {% include schema/select.html options=options %}
+  {% else %}
+    {%- assign options_path = p.options | split: '.' -%}
+    {%- assign options = site.data -%}
+    {%- for level in options_path -%}
+      {%- assign new_options = options[level] -%}
+      {%- assign options = new_options -%}
+    {%- endfor -%}
+    {% if options != nil %}
+      {% include schema/select.html options=options %}
+    {% else %}
+      {{ p.options }} not found
+    {% endif %}
+  {% endif %}
+{% endcapture %}
+{% endif %}
+{%- comment -%}
+
+  SCHEMA
+
+{%- endcomment -%}
+{% if p.schema != nil %}
+{% capture out %}
+{%- comment -%} Search reference on page or site.data (root) {%- endcomment -%}
+  {% if page[p.schema] or site.data[p.schema] %}
+    {%- assign schema = page[p.schema] | default: site.data[p.schema] -%}
+    {% include schema/properties.html properties=schema.properties parent=p title=include.property.first %}
+  {% else %}
+    {%- comment -%} Search reference on site.data space {%- endcomment -%}
+    {%- assign schema_path = p.schema | split: '.' -%}
+    {%- assign schema = site.data -%}
+    {%- for level in schema_path -%}
+      {%- assign new_schema = schema[level] -%}
+      {%- assign schema = new_schema -%}
+    {%- endfor -%}
+    {%- comment -%} Render or yield error {%- endcomment -%}
+    {% if schema != nil %}
+      {% include schema/properties.html properties=schema.properties parent=p title=include.property.first %}
+    {% else %}
+      {% include bootstrap/alert.html body="Schema not found" %}
+    {% endif %}
+  {% endif %}
+{% endcapture %}
+{% endif %}
+{%- comment -%}
+
+  ITEMS
+
+{%- endcomment -%}
+{% if p.items != nil %}
+{% capture out %}
+{%- comment -%} Search reference on page or site.data (root) {%- endcomment -%}
+  {% if page[p.items] or site.data[p.items] %}
+    {%- assign items = page[p.items] | default: site.data[p.items] -%}
+    {% include schema/items.html schema=items parent=p %}
+  {% else %}
+    {%- comment -%} Search reference on site.data space {%- endcomment -%}
+    {%- assign items_path = p.items | split: '.' -%}
+    {%- assign items = site.data -%}
+    {%- for level in items_path -%}
+      {%- assign new_items = items[level] -%}
+      {%- assign items = new_items -%}
+    {%- endfor -%}
+    {%- comment -%} Render or yield error {%- endcomment -%}
+    {% if items != nil %}
+      {% include schema/items.html schema=items parent=p %}
+    {% else %}
+      {%- assign error = p.items | append: " not found" -%}
+      {% include bootstrap/alert.html body=error %}
+    {% endif %}
+  {% endif %}
+{% endcapture %}
+{% endif %}
+
+{%- comment -%} End propertyWorkspace capture {%- endcomment -%}
+{% endcapture %}
+{%- comment -%}
+
+  END OF PROPERTY
+  shift path current label
+
+{%- endcomment -%}
+{%- assign new_path = "" | split: "" -%}
+{%- for p in path -%}
+  {%- unless forloop.last -%}
+    {%- assign new_path = new_path | push: p -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign path = new_path -%}
+
+{%- comment -%} Clear and render output {%- endcomment -%}
+{%- assign propertyWorkspace = "" -%}{{ out }}
+
+{%- comment -%} API {%- endcomment -%}
+{% capture api %}Render a property
+property object nil | Property to render{% endcapture %}

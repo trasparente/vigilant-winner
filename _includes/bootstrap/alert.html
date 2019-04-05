@@ -1,0 +1,9 @@
+<div class="alert alert-{% if include.type %}{{ include.type }}{% else %}danger{% endif %} {% if include.dismiss %}alert-dismissible fade show{% endif %}" role="alert">
+{{ include.body | markdownify | remove: '<p>' |remove: '</p>' }}
+{% if include.dismiss %}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>{% endif %}
+</div>
+{% capture api %}type string "danger" | Styling contextual class
+body markdown nil | Body of alert
+dismiss boolean nil | Make alert dismissable{% endcapture %}

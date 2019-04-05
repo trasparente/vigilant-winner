@@ -6,19 +6,19 @@
   <div class="modal-dialog modal-dialog-centered {% if include.large %}modal-lg{% endif %}" role="document">
     <{% if include.form %}form{% else %}div{% endif %} class="modal-content" id="{{ id }}Content">
       <div class="modal-header">
-        <h5 class="modal-title" id="{{ id }}Label">{{ include.title | default: "Title" }}</h5>
+        <h5 class="modal-title" id="{{ id }}Label">{{ include.title | default: "Modal" }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        {% if include.md %}{{ include.md | markdownify }}{% endif %}
-        {% if include.page %}{% capture md %}{% include {{ include.page }} %}{% endcapture %}{{ md | markdownify }}{% endif %}
+        {% if include.body %}{{ include.body | markdownify }}{% endif %}
+        {% if include.page %}{% capture body %}{% include {{ include.page }} %}{% endcapture %}{{ body | markdownify }}{% endif %}
       </div>
       {% if include.form %}
       <div class="modal-footer">
-        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">
+        <button type="button" class="btn" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn">
           <span class="spinner-border spinner-border-sm mr-2 d-none" role="status" aria-hidden="true"></span>{{ include.submit | default: "OK" }}
         </button>
       </div>
@@ -28,3 +28,11 @@
       {% endif %}
   </div>
 </div>
+{% capture api %}id string "modal" | Id of the modal
+title string "Modal" | Title of the modal
+fade boolean nil | Fade in/out animation
+large boolean nil | Set a large modal
+body markdown nil | Body of the modal
+page string nil | Include file for the body
+form boolean nil | Render modal as a form
+submit string "OK" | Text for the submit button, need `form=true`{% endcapture %}

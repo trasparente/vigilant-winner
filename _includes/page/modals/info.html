@@ -3,7 +3,7 @@
 {%- assign release = github.releases | first -%}
 - **Page**
   - link [`{{ page.url | absolute_url }}`]({{ page.url | absolute_url }})
-  - github_link [`{{ github.repository_nwo | append: "/blob/" | append: repository.default_branch | append: "/" | append: page.path }}`]({% include filter/github_link.html page=page %})
+  - github_link [`{{ github.repository_nwo | append: "/blob/" | append: repository.default_branch | append: "/" | append: page.path }}`]({% include filter/github_url.html page=page %})
   - environment `{{ github.environment }}`
   - title `{{ page.title }}`
   - name `{{ page.name }}`

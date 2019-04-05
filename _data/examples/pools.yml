@@ -1,0 +1,9 @@
+properties:
+  contributes:
+    type: number
+    pool:
+      ref: pools.quota
+  quota:
+    exclude: true
+    pool:
+      value: 100

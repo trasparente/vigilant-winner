@@ -1,6 +1,7 @@
-{%- assign words = include.string | replace: '-', ' ' | replace: '_', ' ' | split: ' ' -%}
+{%- assign words = include.string | replace: '-', ' ' | replace: '_', ' ' | replace: '/', ' ' | split: ' ' -%}
 {%- for word in words -%}
   {%- if forloop.first -%}
 {{ word | capitalize }}{%- unless forloop.last -%} {%- endunless -%}{% else %}
 {{ word }}{%- unless forloop.last -%} {%- endunless -%}{% endif %}
 {%- endfor -%}
+{% capture api %}string string nil | String to unslug{% endcapture %}

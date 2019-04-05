@@ -1,0 +1,16 @@
+<div data-widget="preview{% if include.data %}-standalone{% endif %}">
+  <pre class="highlight"><code class="language-txt copy-text">{% if include.data %}{{ include.data | jsonify }}{% endif %}Preview area</code></pre>
+  <!-- <div class="form-group">
+    <input type="button" value="Commit{% if include.data_file %} to {{ include.data_file }}{% endif %}" class="commit-button"{% if include.data_file %} data-file="{{ include.data_file }}"{% endif %}>
+    <button type="button" class="copy-button">
+      Copy to clipboard
+    </button>
+  </div> -->
+</div>
+{% capture api %}
+Usable in standalone.
+
+```liquid
+{% raw %}{% include schema/preview.html data=page.svg %}{% endraw %}
+```
+{% endcapture %}

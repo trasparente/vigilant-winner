@@ -1,0 +1,5 @@
+properties:
+  color:
+    type: color
+  range:
+    type: range

@@ -1,0 +1,38 @@
+{%- assign opt_control = false -%}
+{%- assign attributes = 'min max' | split: " " -%}
+<div class="form-group row">
+  <!-- <div class="input-group"> -->
+    {% include schema/label.html %}
+    <div class="col-sm-{{ 12 | minus: label_width }}">
+    <select
+      class="w-100"
+      aria-label="{{ label }}"
+      aria-describedby="{{ field_id }}_label"
+      {% for attr in attributes %}{% if p[attr] %} {{ attr }}="{{ p[attr] }}"{% endif %}{% endfor %}
+      {% if p.multiple %}multiple size="{{ include.options.size }}"{% endif %}
+      {% if p.type == 'number' %} data-number="true"{% endif %}
+      data-path="{{ path | join: '.' }}">
+    {% for item in include.options %}
+      {% if item.first != nil %}{%- assign item = item[0] -%}{% endif %}
+      {% if item.optgroup %}
+        {% if opt_control %}
+          </optgroup>
+        {% else %}
+          {%- assign opt_control = true -%}
+        {% endif %}
+        <optgroup label="{{ item.optgroup }}">
+      {% else %}
+        {%- if item.size == 2 -%}
+          {% assign item_title = item[1] %}
+          {%- assign item_value = item[0] -%}
+        {%- else -%}
+          {%- assign item_title = item.title | default: item -%}
+          {% assign item_value = item.value | default: item_title %}
+        {%- endif -%}
+        <option value="{{ item_value }}" {% if item.selected %}selected{% endif %}>{{ item_title }}{% if item.description %}: {{ item.description }}{% endif %}</option>
+      {% endif %}
+    {% endfor %}
+    {% if opt_control %}</optgroup>{% endif %}
+    </select>
+  </div><!-- close .col -->
+</div><!-- close form-group -->

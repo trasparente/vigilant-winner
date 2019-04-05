@@ -1,13 +1,16 @@
 {%- assign counter = counter | plus: 1 -%}
 <a data-toggle="collapse" class="jsonPreview" href="#collapse{{ counter }}" aria-expanded="false" aria-controls="collapse{{ counter }}">
-  {{ include.title | default: "Preview" }}
+  {{ include.title | default: "Collapsible" }}
 </a>
 {% if include.schema %}
 <div class="jsonPreview collapse" id="collapse{{ counter }}">
   <pre class="highlight"><code class="language-txt copy-text">{{ include.schema | jsonify }}</code></pre>
 </div>
-{% else if include.md %}
+{% else if include.body %}
 <div class="collapse" id="collapse{{ counter }}">
-{{ include.md | markdownify}}
+{{ include.body | markdownify }}
 </div>
 {% endif %}
+{% capture api %}title string "Collapsible" | Clickable title
+schema object nil | Object to jsonize
+body markdown nil | Body of collapsible{% endcapture %}
