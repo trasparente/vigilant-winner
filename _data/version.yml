@@ -1,0 +1,3 @@
+properties:
+  number: true
+  name: true

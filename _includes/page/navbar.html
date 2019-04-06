@@ -9,7 +9,7 @@
         {%- assign html_pages = site.html_pages | sort: "weight" -%}
         {% for link in html_pages %}
         <li class="nav-item{% if page.url == link.url %} active{% endif %}">
-          <a class="nav-link" href="{{ link.url | relative_url }}">{{ link.title | default: "Home" }}{% if page.url == link.url %}<span class="sr-only">(current)</span>{% endif %}</a>
+          <a class="nav-link" href="{{ link.url | relative_url }}">{{link.name}}{{ link.title | default: "Home" }}{% if page.url == link.url %}<span class="sr-only">(current)</span>{% endif %}</a>
         </li>
         {% endfor %}
 

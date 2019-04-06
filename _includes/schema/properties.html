@@ -11,7 +11,7 @@
         data-target="#collapse_{{ field_id }}"
         aria-expanded="{% if include.parent.expanded != false %}true{% else %}false{% endif %}"
         aria-controls="collapse_{{ field_id }}"
-        aria-label="{{ label }}">{{ include.parent.title | default: backup_title }}</a> {% if parent.description or parent.units %}- {{ parent.description }} {{ parent.units }}{% endif %}
+        aria-label="{{ label }}">{{ include.parent.title | default: backup_title }}</a>
     </div>
     <div
       id="collapse_{{ field_id }}"

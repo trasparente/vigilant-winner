@@ -5,21 +5,21 @@
         href="#"
         data-toggle="collapse"
         data-target="#collapse_{{ field_id }}"
-        aria-expanded="{% if p.expanded %}true{% else %}false{% endif %}"
+        aria-expanded="{% if p.expanded != false %}true{% else %}false{% endif %}"
         aria-controls="collapse_{{ field_id }}"
-        aria-label="{{ label }}">{{ title }}</a> {% if p.description or p.units %}- {{ p.description }} {{ p.units }}{% endif %}
+        aria-label="{{ label }}">{{ title }}</a>
     </div>
     <div
       id="collapse_{{ field_id }}"
-      class="collapse {% if p.expanded %}show{% endif %}"
+      class="collapse {% if p.expanded != false %}show{% endif %}"
       aria-labelledby="heading_{{ field_id }}"
       data-parent="#accordion_{{ field_id }}">
       <div class="card-body">
         {% if include.parent.description or include.parent.units %}<p class="text-muted">{{ include.parent.description }} {{ include.parent.units }}</p>{% endif %}
         <a href="#" class="btn" data-add="{{ label }}" data-index="0" role="button">+ {{ include.schema.title }}</a>
-        <a href="#" class="btn" data-sub="{{ label }}" data-index="0" role="button">− {{ include.schema.title }}</a>
+        <a href="#" class="btn" data-sub="{{ label }}" role="button">− {{ include.schema.title }}</a>
         <template id="template_{{ field_id }}">
-          {% include schema/properties.html properties=include.schema.properties parent=include.schema %}
+          {% include schema/properties.html properties=include.schema.properties parent=include.schema title=title %}
         </template>
       </div><!-- close card-body -->
     </div><!-- close collapsible -->

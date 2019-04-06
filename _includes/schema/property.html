@@ -2,13 +2,14 @@
 {% capture out %}{% endcapture %}
 {% comment %} -------------------- Settings -------------------- {% endcomment %}
 {%- assign p = include.property[1] -%}
+{%- assign counter = counter | plus: 1 -%}
 {% capture backup_title %}{% include filter/unslug.html string=include.property.first %}{% endcapture %}
 {%- assign title = include.property[1].title | default: backup_title -%}
 {%- assign label = title | slugify | replace: '-', '_' -%}
 {%- assign backup_title = schema.title | capitalize -%}
 {%- assign backup_description = backup_title | append: " " | append: include.property.first -%}
 {%- assign path = path | push: label -%}
-{%- assign field_id = path | join: '_' | append: '_' | append: forloop.index -%}
+{%- assign field_id = path | join: '_' | append: '_' | append: counter -%}
 {%- assign classic_fields = 'text number date color range checkbox radio time url email' -%}
 {% comment %}
 

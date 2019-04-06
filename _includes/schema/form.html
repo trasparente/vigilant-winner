@@ -1,8 +1,8 @@
 {% if include.schema == nil %}
-{% include bootstrap/alert.html body="Schema not found" %}
+{% include bootstrap/alert.html body="Schema is nil" %}
 {% else %}
 {%- assign schema = include.schema -%}
-{% assign counter = counter| plus: 1 %}
+{% assign counter = counter | plus: 1 %}
 {% assign default_id = "schema" %}
 {% assign default_title = default_id | capitalize %}
 {% assign id = schema.title | default: default_id | slugify | append: "_" | append: counter %}
