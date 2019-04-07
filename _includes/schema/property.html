@@ -111,24 +111,28 @@
 {%- endcomment -%}
 {% if p.items != nil %}
 {% capture out %}
-{%- comment -%} Search reference on page or site.data (root) {%- endcomment -%}
-  {% if page[p.items] or site.data[p.items] %}
-    {%- assign items = page[p.items] | default: site.data[p.items] -%}
-    {% include schema/items.html schema=items parent=p %}
+  {% if p.items.first %}
+    {% include schema/items.html schema=p.items parent=p %}
   {% else %}
-    {%- comment -%} Search reference on site.data space {%- endcomment -%}
-    {%- assign items_path = p.items | split: '.' -%}
-    {%- assign items = site.data -%}
-    {%- for level in items_path -%}
-      {%- assign new_items = items[level] -%}
-      {%- assign items = new_items -%}
-    {%- endfor -%}
-    {%- comment -%} Render or yield error {%- endcomment -%}
-    {% if items != nil %}
+  {%- comment -%} Search reference on page or site.data (root) {%- endcomment -%}
+    {% if page[p.items] or site.data[p.items] %}
+      {%- assign items = page[p.items] | default: site.data[p.items] -%}
       {% include schema/items.html schema=items parent=p %}
     {% else %}
-      {%- assign error = p.items | append: " not found" -%}
-      {% include bootstrap/alert.html body=error %}
+      {%- comment -%} Search reference on site.data space {%- endcomment -%}
+      {%- assign items_path = p.items | split: '.' -%}
+      {%- assign items = site.data -%}
+      {%- for level in items_path -%}
+        {%- assign new_items = items[level] -%}
+        {%- assign items = new_items -%}
+      {%- endfor -%}
+      {%- comment -%} Render or yield error {%- endcomment -%}
+      {% if items != nil %}
+        {% include schema/items.html schema=items parent=p %}
+      {% else %}
+        {%- assign error = p.items | append: " not found" -%}
+        {% include bootstrap/alert.html body=error %}
+      {% endif %}
     {% endif %}
   {% endif %}
 {% endcapture %}

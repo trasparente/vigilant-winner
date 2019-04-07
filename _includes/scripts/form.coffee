@@ -145,7 +145,6 @@ $("[data-widget=form]").each ->
     true
 
   # Add sub-schemas
-  # $('body').on('click', 'a.myclass', function() {
   form.on 'click', "[data-add]", (e) ->
     e.preventDefault()
     # Save data
@@ -164,7 +163,7 @@ $("[data-widget=form]").each ->
       html: html.replace "<span></span>", "<span>#{index + 1}</span> "
       class: 'card-body added'
     # Append new card-body to the collapse
-    $(e.target).closest('.collapse').append card_body
+    $(e.target).closest('.items').append card_body
     # Update incremented index
     index++
     $(e.target).data 'index', index
@@ -237,10 +236,10 @@ $("[data-widget=form]").each ->
   form.find("[data-preview=true]").on "click", (e) ->
     e.preventDefault()
     object = parseForm()
-    yml = form.find("[data-widget=preview] code")
-    if Object.keys(object).length
-      yml.html YAML.stringify object, 8, 2
-    else yml.html ''
+    $("[data-widget=preview] code").each () ->
+      if Object.keys(object).length
+        $(@).html YAML.stringify object, 8, 2
+      else $(@).html '<br>'
     true
 
   # Submit: SAVE button handler
@@ -278,7 +277,8 @@ $("[data-widget=form]").each ->
             return if i is $(@).attr('aria-label') then data[i] ?= value else data[i] ?= {}
         , data
       true
-    return {"#{form.data 'schema'}": data}
+    # return {"#{form.data 'schema'}": data}
+    return data
 
   # Close form-widget elements loop
   true

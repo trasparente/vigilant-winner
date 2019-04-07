@@ -1,3 +1,5 @@
+{% if compact %}
+{% comment %} -------------------- Accordion -------------------- {% endcomment %}
 <div id="accordion_{{ field_id }}" class="accordion">
   <div class="card {{ include.parent.class }}">
     <div class="card-header" id="heading_{{ field_id }}">
@@ -11,7 +13,7 @@
     </div>
     <div
       id="collapse_{{ field_id }}"
-      class="collapse {% if p.expanded != false %}show{% endif %}"
+      class="items collapse {% if p.expanded != false %}show{% endif %}"
       aria-labelledby="heading_{{ field_id }}"
       data-parent="#accordion_{{ field_id }}">
       <div class="card-body">
@@ -26,3 +28,15 @@
   </div><!-- close card -->
   <div class="card"></div><!-- patch for single accordion -->
 </div><!-- close accordion -->
+{% else %}
+{% comment %} -------------------- Sub Form -------------------- {% endcomment %}
+<div class="items">
+<h4>{{ title }} <a href="#" class="btn" data-add="{{ label }}" data-index="0" role="button">+ {{ include.schema.title }}</a>
+<a href="#" class="btn" data-sub="{{ label }}" role="button">− {{ include.schema.title }}</a>
+<template id="template_{{ field_id }}">
+  {% include schema/properties.html properties=include.schema.properties parent=include.schema title=title %}
+</template>
+</h4>
+</div>
+{% if include.parent.description or include.parent.units %}<p class="text-muted">{{ include.parent.description }} {{ include.parent.units }}</p>{% endif %}
+{% endif %}

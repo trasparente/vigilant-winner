@@ -1,9 +1,12 @@
-<div class="form-group row">
-{% include schema/label.html %}
+{% comment %} -------------------- Init -------------------- {% endcomment %}
 {%- assign attributes = 'required readonly' | split: " " -%}
 {%- assign html_attributes = 'type min minlength max maxlength step value placeholder' | split: " " -%}
 {%- assign data_attributes = 'watch digits eval template exclude svg' | split: " " -%}
 {%- assign boolean_fields = 'radio checkbox' -%}
+{% if compact %}
+{% comment %} -------------------- Form Group Row -------------------- {% endcomment %}
+<div class="form-group row">
+{% include schema/label.html %}
 {% capture field %}
 <div class="col-sm-{{ 12 | minus: label_width }}">
 {%- comment -%} Check boolean, open .form-check {%- endcomment -%}
@@ -43,8 +46,51 @@
 </datalist>
 {% endif %}
 {% endcapture %}
+{% else %}
+{% comment %} -------------------- Plain Form Group -------------------- {% endcomment %}
+<div class="form-group">
+{% include schema/label.html %}
+{% capture field %}
+{%- comment -%} Check boolean, open .form-check {%- endcomment -%}
+{% if 'checkbox radio' contains p.type %}<div class="custom-control custom-{{ p.type }}">{% endif %}
+<input
+  class="{% if boolean_fields contains p.type %}custom-control-input{% elsif p.type == 'range' %}custom-range{% else %}form-control{% endif %}"
+  aria-label="{{ label }}"
+  aria-describedby="{{ field_id }}_label"
+  id="{{ field_id }}"
+  {% for attr in attributes %}{% if p[attr] %} {{ attr }}{% endif %}
+  {% endfor %}
+  {% for attr in html_attributes %}{% if p[attr] %} {{ attr }}="{{ p[attr] }}"{% endif %}
+  {% endfor %}
+  {% for attr in data_attributes %}{% if p[attr] %} data-{{ attr }}="{{ p[attr] }}"{% endif %}
+  {% endfor %}
+  {% if p.pool.value %} type="number" value="{{ p.pool.value }}" data-pool="{{ p.pool.value }}"{% endif %}
+  {% if p.pool.ref %} type="number" data-pool_ref="{{ p.pool.ref }}"{% endif %}
+  {% if p.template or p.eval or p.watch or p.pool.value %} readonly="readonly"{% endif %}
+  {% if 'number range' contains p.type or p.pool or p.eval %} data-number="true"{% endif %}
+  {% if (p.pool or p.eval) and p.type == nil %} type="number"{% endif %}
+  {% if p.type == 'number' %}{% unless p.step %} step="any"{%- endunless -%}{% endif %}
+  {% if p.list %} list="list_{{ label }}"{% endif %}
+  data-path="{{ path | join: '.' }}">
+{%- comment -%} Check boolean, close .form-check {%- endcomment -%}
+{% if 'checkbox radio' contains p.type %}<label class="custom-control-label" for="{{ field_id }}">{% if compact != true %}{{ title }}{% endif %}</label></div>{% endif %}
+{% comment %} -------------------- Description -------------------- {% endcomment %}
+{% if p.description or p.units %}<small class="form-text text-muted">{{ p.description }} {{ p.units }}</small>{% endif %}
+{%- comment -%} Add datalist {%- endcomment -%}
+{% if p.list %}
+<datalist id="list_{{ label }}">{% for item in p.list %}
+  {%- assign item_value = item[0] | default: item -%}
+  {%- assign item_label = item[1] -%}
+  <option
+    value="{{ item_value }}"
+    {% if item_label %} label="{{ item_label }}"{% endif %}></option>
+  {% endfor %}
+</datalist>
+{% endif %}
+{% endcapture %}
+{% endif %}
 {{ field | strip_newlines }}
-</div>
+</div><!-- Close .form-group maybe .row-->
 {% capture api %}Render a `.form_group`
 Use `label`, `field_id`, `label_width` and `p`
 type string "text" | Can be `text` `number` `date` `color` `range` `checkbox` `radio` `time` `url` `email`

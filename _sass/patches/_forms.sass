@@ -1,54 +1,59 @@
-// header
-// .card-header p:first-child
-//   @extend .mb-0
-
-// remove bottom margin of last child
-// fieldset
-//   & > *:last-child
-//     @extend .mb-0
-//   & > .card:not(:last-child)
-//     @extend .mb-4
-
+// Style accordion handle and description
+.card-header
+  & > a[data-toggle="collapse"]
+    color: $body-color
+    @extend .font-weight-bold
+  .card-body > p
+    @extend .text-muted
 form
+  // Style buttons
   .btn
     &[type="submit"]
       @extend .btn-primary
     &[type="reset"],
     &[type="button"]
       @extend .btn-light
-  // input
-  //   &[type="text"], &[type="number"], &[type="date"], &[type="time"], &[type="url"], &[type="email"]
-  //     background-color: $gray-100
-
-// Style accordion handle and description
-.form-accordion
-  a[data-toggle="collapse"]
-    @extend .font-weight-bold
-  .card-body > p
-    @extend .text-muted
-  
-
-// Remove bottom margin if there are no buttons
-form > .accordion:last-child
-  @extend .mb-0
-
-// Checkbox pointer
-.form-check-label, input[type="checkbox"]
-  cursor: pointer
-
-// Remove top padding from added card-body
-.card-body.added
-  @extend .pt-0
-
-// Add button
-a[data-add],
-a[data-sub]
-  line-height: 1em
-  font-weight: bold
-  @extend .btn-sm, .btn-secondary
-
-// Added index badge pill
-.card-header > span
-  @extend .badge, .badge-pill, .badge-secondary
-  position: relative
-  top: -1px
+  .card-header
+    // Added index badge pill
+    & > span
+      @extend .badge, .badge-pill, .badge-secondary
+      position: relative
+      top: -1px
+  // Remove bottom margin if there are no buttons
+  & > .accordion:last-child
+    @extend .mb-0
+  // Checkbox pointer
+  .form-check-label,
+  input[type="checkbox"],
+  .custom-control-label,
+    cursor: pointer
+  // Custom range slider thumb (single call doesn't work)
+  .custom-range
+    &::-moz-range-thumb
+      cursor: pointer
+    &::-webkit-slider-thumb
+      cursor: pointer
+    &::-ms-thumb
+      cursor: pointer
+  // Remove top padding from added card-body
+  .card-body.added
+    @extend .pt-0
+  // Add button
+  a[data-add],
+  a[data-sub]
+    line-height: 1em
+    font-weight: bold
+    @extend .btn-sm, .btn-secondary
+  // Plain form
+  &:not([data-compact])
+    // Add form bottom margin
+    @extend .mb-5
+    //  Add buttons top margin
+    .form-buttons
+      @extend .mt-4
+    // Add items container a bottom padding
+    .items
+      @extend .pb-3
+      // remove top padding added properties
+      .added
+        @extend .pb-0

@@ -1,9 +1,9 @@
 {%- assign opt_control = false -%}
 {%- assign attributes = 'min max' | split: " " -%}
-<div class="form-group row">
+<div class="form-group{% if accordion %} row{% endif %}">
   <!-- <div class="input-group"> -->
     {% include schema/label.html %}
-    <div class="col-sm-{{ 12 | minus: label_width }}">
+    {% if compact %}<div class="col-sm-{{ 12 | minus: label_width }}">{% endif %}
     <select
       class="w-100"
       aria-label="{{ label }}"
@@ -34,5 +34,5 @@
     {% endfor %}
     {% if opt_control %}</optgroup>{% endif %}
     </select>
-  </div><!-- close .col -->
+  {% if compact %}</div><!-- close .col -->{% endif %}
 </div><!-- close form-group -->

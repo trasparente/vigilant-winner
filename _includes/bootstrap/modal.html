@@ -3,7 +3,7 @@
 {% assign id = include.id | default: default_id %}
 <!-- Modal -->
 <div class="modal {% if include.fade %}fade{% endif %}" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}Label" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered {% if include.large %}modal-lg{% endif %}" role="document">
+  <div class="modal-dialog modal-dialog-centered {% if include.large %}modal-lg{% endif %} {% if include.scrollable %}modal-dialog-scrollable{% endif %}" role="document">
     <{% if include.form %}form{% else %}div{% endif %} class="modal-content" id="{{ id }}Content">
       <div class="modal-header">
         <h5 class="modal-title" id="{{ id }}Label">{{ include.title | default: "Modal" }}</h5>

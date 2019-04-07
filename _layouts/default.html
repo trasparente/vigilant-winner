@@ -11,19 +11,7 @@
 {% if page.header != false %}{% include page/header.html %}{% endif %}
 {% include page/navbar.html %}
 {% include page/main.html %}
-
-<!-- Login modal window -->
-{% include bootstrap/modal.html id="loginModal" page="page/modals/login.html" large=true title="Login" form=true submit="Login" %}
-
-<!-- Commit modal window -->
-{% include bootstrap/modal.html id="commitModal" page="page/modals/commit.html" large=true title="Save / create / update" form=true submit="Commit" %}
-
-<!-- Info modal window -->
-{% include bootstrap/modal.html id="infoModal" page="page/modals/info.html" large=true title="Info" %}
-
-<!-- Alert modal -->
-{% include page/modals/alert.html %}
-
+{% include page/modals.html %}
 {% include page/footer.html %}
   </body>
 </html>
