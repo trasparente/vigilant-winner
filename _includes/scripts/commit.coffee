@@ -72,7 +72,7 @@ commit = (e, file, object) ->
     submit.prop "disabled", false
     spinner.addClass "d-none"
     storage.set 'update_sha', data.sha
-    console.log data.sha
+    console.log data
     true
   # Start commit
   get_sha()
