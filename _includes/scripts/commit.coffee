@@ -2,7 +2,7 @@
 commit = (e, file, object) ->
   e.preventDefault()
   form = $ e.target
-  load = YAML.stringify object, null, 2
+  load = YAML.stringify object, 8, 2
   submit = form.find "[type='submit']"
   spinner = submit.find "span[class*='spinner']"
   feedback = form.find ".invalid-feedback"
@@ -63,10 +63,13 @@ commit = (e, file, object) ->
       error: error
     true
   file_updated = (data, status) ->
+    console.log data
     store_sha data
+    feedback.text("file_updated: #{status} #{data}").addClass "d-block"
     true
   file_created = (data, status) ->
     store_sha data
+    feedback.text("file_created: #{status} #{data}").addClass "d-block"
     true
   store_sha = (data) ->
     submit.prop "disabled", false
