@@ -2,7 +2,6 @@
 commit = (e, file, object) ->
   e.preventDefault()
   form = $ e.target
-  load = YAML.stringify object, 8, 2
   submit = form.find "[type='submit']"
   spinner = submit.find "span[class*='spinner']"
   feedback = form.find ".invalid-feedback"
@@ -39,7 +38,7 @@ commit = (e, file, object) ->
       headers: "Authorization": "token #{storage.get('token')}"
       data: JSON.stringify {
         message: "create_file #{file}"
-        content: btoa load
+        content: btoa object
       }
       success: file_created
       error: error
@@ -57,7 +56,7 @@ commit = (e, file, object) ->
       data: JSON.stringify {
         message: "update_file #{file}"
         sha: data.sha
-        content: btoa load
+        content: btoa object
       }
       success: file_updated
       error: error

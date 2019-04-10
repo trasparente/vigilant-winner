@@ -258,7 +258,7 @@ $("[data-widget=form]").each ->
     return
 
   # Commit widget submit
-  commit_widget.find("form").on "submit", (e) -> commit e, $("#dataPath").val(), () -> parseForm()
+  commit_widget.find("form").on "submit", (e) -> commit e, $("#dataPath").val(), YAML.stringify parseForm(), 8, 2
 
   ###
     Parse form values

@@ -7,7 +7,7 @@ version = {
         if storage.get("token") and "{{ site.remote_theme }}"
           version.check "{{ site.remote_theme }}"
             .then (remote) ->
-              soreage.set "#{remote.full_name}_updated_at", remote.updated_at
+              storage.set "#{remote.full_name}_updated_at", remote.updated_at
               console.log data.updated_at.getTime(), remote.updated_at.getTime()
         return
     return
