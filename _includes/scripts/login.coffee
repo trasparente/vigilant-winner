@@ -15,9 +15,9 @@ login = {
   feedback: $ "#loginModalContent .invalid-feedback"
   init: () ->
     login.form.on "submit", login.serve
-    if storage.get('token') and login.link.text() == "Login"
+    if storage.get("login.token") and login.link.text() == "Login"
       login.link.text 'Logout'
-        .attr 'title', "Logged as #{storage.get('user')}"
+        .attr 'title', "Logged as #{storage.get("login.user")}"
         .attr 'data-toggle', 'tooltip'
         .off "click"
         .on "click", login.logout
@@ -39,9 +39,9 @@ login = {
     login.spinner.addClass "d-none"
   success: (data, status) ->
     login.modal.modal "hide"
-    storage.set "token", login.token.val()
-      .set "user", data.login
-      .set "logged", new Date()
+    storage.set "login.token", login.token.val()
+      .set "login.user", data.login
+      .set "login.created", new Date()
     login.link.text "Logout"
       .attr "data-original-title", "Logged as #{data.login}"
       .attr "data-toggle", "tooltip"

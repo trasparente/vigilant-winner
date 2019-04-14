@@ -18,13 +18,15 @@
 ###
 storage = {
   key: () ->
-    return  '{{ site.github.repository_url }}{{ page.url | absolute_url }}'
+    return "{{ site.github.repository_nwo }}"
   init: () ->
     if !localStorage.getItem(storage.key())? then storage.store {
-      "created": new Date()
-      "version": '{{ site.github.latest_release.tag_name }}'
-      "url": '{{ page.url | absolute_url }}'
-      "repository": '{{ site.github.repository_url }}'
+      "storage":
+        "created": new Date()
+        "tag": "{{ site.github.latest_release.tag_name }}"
+        "build": "{{ site.github.build_revision }}"
+      "repository":
+        "url": "{{ site.github.repository_url }}"
     }
     true
   clear: (key) ->
@@ -35,21 +37,31 @@ storage = {
     else
       localStorage.removeItem storage.key()
     true
+  # https://stackoverflow.com/a/6394197
   set: (key, value) ->
     storage.init()
     obj = storage.get()
-    if key? and value?
-      obj[key] = value
-      storage.store obj
-      return storage # for multiple storage
-    else
-      return false
+    storage.prop key, value, obj
+    storage.store obj
+    return storage # for multiple storage
+  prop: (key, value, obj) ->
+    key_array = key.split "."
+    final = key_array.pop()
+    while k = key_array.shift()
+      # console.log typeof obj[k]
+      # if typeof obj[k] == 'undefined' then return {}
+      if !obj[k]? then obj[k] = {}
+      obj = obj[k]
+    return if value then obj[final] = value else obj[final]
   get: (key) ->
     storage.init()
-    if key?
-      storage.get()[key]
+    return if key?
+      key.split(".").reduce (data, i) =>
+        data?[i]
+      , storage.get()
     else
       JSON.parse LZString.decompressFromBase64 localStorage.getItem storage.key()
   store: (obj) ->
     localStorage.setItem storage.key(), LZString.compressToBase64 JSON.stringify obj
+    return obj
 }

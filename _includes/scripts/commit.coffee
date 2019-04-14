@@ -13,7 +13,7 @@ commit = (e, file, object) ->
     $.ajax commit_url,
       method: 'GET'
       headers:
-        authorization: "token #{storage.get('token')}"
+        authorization: "token #{storage.get("login.token")}"
         accept: "application/vnd.github.v3.full+json"
       success: update_file
       error: error_sha
@@ -35,7 +35,7 @@ commit = (e, file, object) ->
     # PUT /repos/:owner/:repo/contents/:path
     $.ajax commit_url,
       method: 'PUT'
-      headers: "Authorization": "token #{storage.get('token')}"
+      headers: "Authorization": "token #{storage.get("login.token")}"
       data: JSON.stringify {
         message: "create_file #{file}"
         content: btoa object
@@ -52,7 +52,7 @@ commit = (e, file, object) ->
     # Commit
     $.ajax commit_url,
       method: 'PUT'
-      headers: "Authorization": "token #{storage.get('token')}"
+      headers: "Authorization": "token #{storage.get("login.token")}"
       data: JSON.stringify {
         message: "update_file #{file}"
         sha: data.sha
@@ -73,7 +73,7 @@ commit = (e, file, object) ->
   store_sha = (data) ->
     submit.prop "disabled", false
     spinner.addClass "d-none"
-    storage.set 'update_sha', data.sha
+    storage.set 'repository.sha', data.sha
     console.log data
     true
   # Start commit
