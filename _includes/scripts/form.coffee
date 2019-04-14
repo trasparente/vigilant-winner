@@ -246,7 +246,7 @@ $("[data-widget=form]").each ->
   form.on "submit", (e) ->
     e.preventDefault()
     # Check login
-    if !storage.get("token")
+    if !storage.get("login.token")
       modal_alert "You need to login", "danger"
       return
     # Check validity
