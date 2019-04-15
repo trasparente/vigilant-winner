@@ -1,0 +1,13 @@
+person:
+  equip:
+    -
+      name: Cosa
+items:
+  -
+    name: "Ciro"
+    age: 0
+    email: "dai"
+    website: ""
+    equip:
+      -
+        name: Biro

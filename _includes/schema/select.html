@@ -1,7 +1,10 @@
 {%- assign opt_control = false -%}
 {%- assign attributes = 'min max' | split: " " -%}
-<div class="form-group{% if accordion %} row{% endif %}">
-  <!-- <div class="input-group"> -->
+{%- assign loaded = file_data -%}
+{% for step in path %}
+  {%- assign loaded = loaded[step] -%}
+{% endfor %}
+<div class="form-group{% if compact %} row{% endif %}">
     {% include schema/label.html %}
     {% if compact %}<div class="col-sm-{{ 12 | minus: label_width }}">{% endif %}
     <select
@@ -29,7 +32,8 @@
           {%- assign item_title = item.title | default: item -%}
           {% assign item_value = item.value | default: item_title %}
         {%- endif -%}
-        <option value="{{ item_value }}" {% if item.selected %}selected{% endif %}>{{ item_title }}{% if item.description %}: {{ item.description }}{% endif %}</option>
+        {% capture string_value %}{{ item_value }}{% endcapture %}
+        <option value="{{ item_value }}" {% if item.selected or loaded == item_value  or loaded contains item_value or loaded contains string_value %}selected=""{% endif %}>{{ item_title }}{% if item.description %}: {{ item.description }}{% endif %}</option>
       {% endif %}
     {% endfor %}
     {% if opt_control %}</optgroup>{% endif %}

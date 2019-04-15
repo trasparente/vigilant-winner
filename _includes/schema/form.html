@@ -4,13 +4,18 @@
 {% else %}
 {% comment %} -------------------- Init -------------------- {% endcomment %}
   {%- assign schema = include.schema -%}
-  {% assign compact = include.compact %}
-  {% assign counter = counter | plus: 1 %}
-  {% assign default_id = "schema" %}
-  {% assign default_title = default_id | capitalize %}
-  {% assign id = schema.title | default: default_id | slugify | append: "_" | append: counter %}
-  {% assign title = schema.title | default: default_title %}
-  {% assign label_width = include.label_width | default: 3 %}
+  {%- assign compact = include.compact -%}
+  {%- assign counter = counter | plus: 1 -%}
+  {%- assign title_stack = "" | split: "" -%}
+  {%- assign default_id = "schema" -%}
+  {%- assign default_title = default_id | capitalize -%}
+  {%- assign id = schema.title | default: default_id | slugify | append: "_" | append: counter -%}
+  {%- assign title = schema.title | default: default_title -%}
+  {%- assign label_width = include.label_width | default: 3 -%}
+  {%- if include.file -%}
+    {%- assign file_name = include.file | replace: ".yml", "" -%}
+    {%- assign file_data = site.data[file_name] -%}
+  {%- endif -%}
   {% if compact %}
 {% comment %} -------------------- Accordion -------------------- {% endcomment %}
   <div id="accordion_{{ id }}" class="accordion">
@@ -29,7 +34,7 @@
       class="collapse {% if schema.expanded != false and include.expanded != false %}show{% endif %}"
       aria-labelledby="heading_{{ id }}"
       data-parent="#accordion_{{ id }}">
-        <form data-widget="form" data-schema="{{ title | slugify | replace: '-', '_' }}" data-compact="true">
+        <form data-widget="form" data-schema="{{ title | slugify | replace: '-', '_' }}" data-compact="true" {% if include.file %}data-file="{{ include.file }}"{% endif %}>
           <div class="card-body">
             {% if schema.description %}{{ schema.description | markdownify }}{% endif %}
             {%- assign path = "" | split: "" -%}
@@ -65,7 +70,7 @@
   </div><!-- close accordion -->
   {% else %}
 {% comment %} -------------------- Plain Form -------------------- {% endcomment %}
-  <form data-widget="form" data-schema="{{ title | slugify | replace: '-', '_' }}">
+  <form data-widget="form" data-schema="{{ title | slugify | replace: '-', '_' }}" {% if include.file %}data-file="{{ include.file }}"{% endif %}>
   {% if include.title %}<h2>{{ title }}</h2>{% endif %}
     {% if schema.description %}{{ schema.description | markdownify }}{% endif %}
     {%- assign path = "" | split: "" -%}

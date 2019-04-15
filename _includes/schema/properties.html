@@ -6,7 +6,7 @@
 <div id="accordion_{{ field_id }}" class="accordion">
   <div class="card {{ include.parent.class }}">
     <div class="card-header" id="heading_{{ field_id }}">
-      <span></span>
+      <span>{% if include.index %}{{ include.index | plus: 1 }}{% endif %}</span>
       <a
         href="#"
         data-toggle="collapse"
@@ -23,7 +23,7 @@
       <div class="card-body">
         {% if include.parent.description or include.parent.units %}<p class="text-muted">{{ include.parent.description }} {{ include.parent.units }}</p>{% endif %}
         {% for pp in include.properties %}
-        {% include schema/property.html property=pp %}
+        {% include schema/property.html property=pp index=include.index %}
         {% endfor %}
       </div><!-- close card-body -->
     </div><!-- close collapsible -->
@@ -32,10 +32,10 @@
 </div><!-- close accordion -->
 {% else %}
 {% comment %} -------------------- Form Group -------------------- {% endcomment %}
-<h4><span></span> {{ include.parent.title | default: backup_title }}</h4>
+<h4><span>{% if include.index %}{{ include.index | plus: 1 }}{% endif %}</span> {{ include.parent.title | default: backup_title }}</h4>
 {% if include.parent.description or include.parent.units %}<p class="text-muted">{{ include.parent.description }} {{ include.parent.units }}</p>{% endif %}
 {% for pp in include.properties %}
-{% include schema/property.html property=pp %}
+{% include schema/property.html property=pp index=include.index %}
 {% endfor %}
 {% endif %}
 {% capture api %}Render the property collapsible and loop `include.parent.properties`

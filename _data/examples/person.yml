@@ -8,3 +8,7 @@ properties:
     type: email
   website:
     type: url
+  equip:
+    items:
+      properties:
+        name: true

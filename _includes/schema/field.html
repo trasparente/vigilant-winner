@@ -3,6 +3,17 @@
 {%- assign html_attributes = 'type min minlength max maxlength step value placeholder' | split: " " -%}
 {%- assign data_attributes = 'watch digits eval template exclude svg' | split: " " -%}
 {%- assign boolean_fields = 'radio checkbox' -%}
+{%- assign loaded = file_data -%}
+{% for step in path %}
+  {%- assign loaded = loaded[step] -%}
+{% endfor %}
+{% comment %} -------------------- Check item object -------------------- {% endcomment %}
+{%- assign new_path = path -%}
+{%- if include.index -%}
+{%- assign loaded = file_data -%}
+{%- assign new_path = "" | split: "" -%}
+{% for pt in path %}{%- if forloop.last -%}{% assign new_path = new_path | push: include.index %}{%- assign loaded = loaded[include.index] -%}{%- endif -%}{%- assign new_path = new_path | push: pt -%}{%- assign loaded = loaded[pt] -%}{% endfor %}
+{%- endif -%}
 {% if compact %}
 {% comment %} -------------------- Form Group Row -------------------- {% endcomment %}
 <div class="form-group row">
@@ -29,7 +40,8 @@
   {% if (p.pool or p.eval) and p.type == nil %} type="number"{% endif %}
   {% if p.type == 'number' %}{% unless p.step %} step="any"{%- endunless -%}{% endif %}
   {% if p.list %} list="list_{{ label }}"{% endif %}
-  data-path="{{ path | join: '.' }}">
+  data-path="{{ new_path | join: '.' }}"
+  {% if loaded %}{% if "checkbox radio" contains p.type and loaded %} checked=""{% else %} value="{{ loaded }}"{% endif %}{% endif %}>
 {%- comment -%} Check boolean, close .form-check {%- endcomment -%}
 {% if 'checkbox radio' contains p.type %}<label class="custom-control-label" for="{{ field_id }}"></label></div>{% endif %}
 </div><!-- Close column -->
@@ -71,9 +83,10 @@
   {% if (p.pool or p.eval) and p.type == nil %} type="number"{% endif %}
   {% if p.type == 'number' %}{% unless p.step %} step="any"{%- endunless -%}{% endif %}
   {% if p.list %} list="list_{{ label }}"{% endif %}
-  data-path="{{ path | join: '.' }}">
+  data-path="{{ new_path | join: '.' }}"
+  {% if loaded %}{% if "checkbox radio" contains p.type and loaded %} checked=""{% else %} value="{{ loaded }}"{% endif %}{% endif %}>
 {%- comment -%} Check boolean, close .form-check {%- endcomment -%}
-{% if 'checkbox radio' contains p.type %}<label class="custom-control-label" for="{{ field_id }}">{% if compact != true %}{{ title }}{% endif %}</label></div>{% endif %}
+{% if "checkbox radio" contains p.type %}<label class="custom-control-label" for="{{ field_id }}">{% if compact != true %}{{ title }}{% endif %}</label></div>{% endif %}
 {% comment %} -------------------- Description -------------------- {% endcomment %}
 {% if p.description or p.units %}<small class="form-text text-muted">{{ p.description }} {{ p.units }}</small>{% endif %}
 {%- comment -%} Add datalist {%- endcomment -%}

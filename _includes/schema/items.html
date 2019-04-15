@@ -18,12 +18,33 @@
       data-parent="#accordion_{{ field_id }}">
       <div class="card-body">
         {% if include.parent.description or include.parent.units %}<p class="text-muted">{{ include.parent.description }} {{ include.parent.units }}</p>{% endif %}
-        <a href="#" class="btn" data-add="{{ label }}" data-index="0" role="button">+ {{ include.schema.title }}</a>
+        <a href="#" class="btn" data-add="{{ label }}" data-index="{{ items.size | default: 0 }}" role="button">+ {{ include.schema.title }}</a>
         <a href="#" class="btn" data-sub="{{ label }}" role="button">− {{ include.schema.title }}</a>
         <template id="template_{{ field_id }}">
           {% include schema/properties.html properties=include.schema.properties parent=include.schema title=title %}
         </template>
       </div><!-- close card-body -->
+      {%- assign items = file_data -%}
+      {% for step in path %}
+        {%- assign items = items[step] -%}
+      {% endfor %}
+{% comment %} -------------------- Check item object -------------------- {% endcomment %}
+      {%- assign new_path = path -%}
+      {%- if include.index -%}
+      {%- assign items = file_data -%}
+      {%- assign new_path = "" | split: "" -%}
+      {% for pt in path %}{%- if forloop.last -%}{% assign new_path = new_path | push: include.index %}{%- assign items = items[include.index] -%}{%- endif -%}{%- assign new_path = new_path | push: pt -%}{%- assign items = items[pt] -%}{% endfor %}
+      {%- endif -%}
+{% comment %} -------------------- Render item -------------------- {% endcomment %}
+      {% if items.size %}
+      {% for i in items %}
+      <div class="card-body added">
+      {%- assign path = new_path -%}
+      {%- assign title_new = title_stack.first -%}
+      {% include schema/properties.html properties=include.schema.properties parent=include.schema title=title_new index=forloop.index0 %}
+      </div>
+      {% endfor %}
+      {% endif %}
     </div><!-- close collapsible -->
   </div><!-- close card -->
   <div class="card"></div><!-- patch for single accordion -->
@@ -31,12 +52,33 @@
 {% else %}
 {% comment %} -------------------- Sub Form -------------------- {% endcomment %}
 <div class="items">
-<h4>{{ title }} <a href="#" class="btn" data-add="{{ label }}" data-index="0" role="button">+ {{ include.schema.title }}</a>
+<h4>{{ title }} <a href="#" class="btn" data-add="{{ label }}" data-index="{{ items.size | default: 0 }}" role="button">+ {{ include.schema.title }}</a>
 <a href="#" class="btn" data-sub="{{ label }}" role="button">− {{ include.schema.title }}</a>
 <template id="template_{{ field_id }}">
   {% include schema/properties.html properties=include.schema.properties parent=include.schema title=title %}
 </template>
 </h4>
+{%- assign items = file_data -%}
+{% for step in path %}
+  {%- assign items = items[step] -%}
+{% endfor %}
+{% comment %} -------------------- Check item object -------------------- {% endcomment %}
+{%- assign new_path = path -%}
+{%- if include.index -%}
+{%- assign items = file_data -%}
+{%- assign new_path = "" | split: "" -%}
+{% for pt in path %}{%- if forloop.last -%}{% assign new_path = new_path | push: include.index %}{%- assign items = items[include.index] -%}{%- endif -%}{%- assign new_path = new_path | push: pt -%}{%- assign items = items[pt] -%}{% endfor %}
+{%- endif -%}
+{% comment %} -------------------- Render item -------------------- {% endcomment %}
+{% if items.size %}
+{% for i in items %}
+<div class="card-body added">
+{%- assign path = new_path -%}
+{%- assign title_new = title_stack.first -%}
+{% include schema/properties.html properties=include.schema.properties parent=include.schema title=title_new index=forloop.index0 %}
+</div>
+{% endfor %}
+{% endif %}
 </div>
 {% if include.parent.description or include.parent.units %}<p class="text-muted">{{ include.parent.description }} {{ include.parent.units }}</p>{% endif %}
 {% endif %}

@@ -5,6 +5,7 @@
 {%- assign counter = counter | plus: 1 -%}
 {% capture backup_title %}{% include filter/unslug.html string=include.property.first %}{% endcapture %}
 {%- assign title = include.property[1].title | default: backup_title -%}
+{%- assign title_stack = title_stack | push: title -%}
 {%- assign label = title | slugify | replace: '-', '_' -%}
 {%- assign backup_title = schema.title | capitalize -%}
 {%- assign backup_description = backup_title | append: " " | append: include.property.first -%}
@@ -26,13 +27,8 @@
 
 {%- endcomment -%}
 {% elsif classic_fields contains p.type or (p.type == nil and p.properties == nil and p.select == nil and p.options == nil and p.items == nil and p.schema == nil) %}
-  {% capture out %}
-    <!-- <div class="input-group"> -->
-      {% include schema/field.html %}
-    {%- comment -%} Close input-group and form-control {%- endcomment -%}
-    <!-- </div> -->
-    <!-- close input-group -->
-{% endcapture %}
+  {% capture out %}{% include schema/field.html index=include.index %}{% endcapture %}
+{%- assign title_stack = title_stack | shift -%}
 {%- comment -%}
 
   SVG
@@ -48,7 +44,7 @@
 {%- endcomment -%}
 {% if p.properties.size > 0 %}
 {% capture out %}
-  {% include schema/properties.html properties=p.properties parent=include.property %}
+  {% include schema/properties.html properties=p.properties parent=include.property index=include.index %}
 {% endcapture %}
 {% endif %}
 {%- comment -%}
@@ -103,6 +99,7 @@
     {% endif %}
   {% endif %}
 {% endcapture %}
+{%- assign title_stack = title_stack | shift -%}
 {% endif %}
 {%- comment -%}
 
@@ -112,12 +109,12 @@
 {% if p.items != nil %}
 {% capture out %}
   {% if p.items.first %}
-    {% include schema/items.html schema=p.items parent=p %}
+    {% include schema/items.html schema=p.items parent=p index=include.index %}
   {% else %}
   {%- comment -%} Search reference on page or site.data (root) {%- endcomment -%}
     {% if page[p.items] or site.data[p.items] %}
       {%- assign items = page[p.items] | default: site.data[p.items] -%}
-      {% include schema/items.html schema=items parent=p %}
+      {% include schema/items.html schema=items parent=p index=include.index %}
     {% else %}
       {%- comment -%} Search reference on site.data space {%- endcomment -%}
       {%- assign items_path = p.items | split: '.' -%}
@@ -128,7 +125,7 @@
       {%- endfor -%}
       {%- comment -%} Render or yield error {%- endcomment -%}
       {% if items != nil %}
-        {% include schema/items.html schema=items parent=p %}
+        {% include schema/items.html schema=items parent=p index=include.index %}
       {% else %}
         {%- assign error = p.items | append: " not found" -%}
         {% include bootstrap/alert.html body=error %}
@@ -155,7 +152,7 @@
 {%- assign path = new_path -%}
 
 {%- comment -%} Clear and render output {%- endcomment -%}
-{%- assign propertyWorkspace = "" -%}{{ out }}
+{%- assign propertyWorkspace = nil -%}{{ out }}
 
 {%- comment -%} API {%- endcomment -%}
 {% capture api %}Render a property

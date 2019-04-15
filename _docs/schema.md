@@ -13,7 +13,7 @@ weight: 200
 {% raw %}{% include schema/form.html schema=site.data.examples.schema preview=true %}{% endraw %}
 ```
 
-{% capture include %}{% include schema/form.html schema=site.data.examples.schema preview=true%}{% endcapture %}
+{% capture include %}{% include schema/form.html schema=site.data.examples.schema preview=true file="extra.yml" compact=true %}{% endcapture %}
 {{ include }}
 {% include template/api.html file="schema/form.html" %}
 

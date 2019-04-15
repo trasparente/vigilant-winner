@@ -252,12 +252,18 @@ $("[data-widget=form]").each ->
     # Check validity
     {valid_native, valid_pools} = checkValididy()
     if valid_native == true && valid_pools == true
+      
       commit_widget.modal "show"
     else
       modal_alert "Native valid: #{valid_native}, Pools valid: #{valid_pools}", if (valid_pools && valid_native) then 'success' else 'danger'
     return
 
-  # Commit widget submit
+  # Commit widget
+  # Check for precompiled file
+  if form.data "file"
+    $("#dataPath").val form.data "file"
+    $("#dataPath").prop "readonly", true
+  # Commit handler
   commit_widget.find("form").on "submit", (e) -> commit e, $("#dataPath").val(), YAML.stringify parseForm(), 8, 2
 
   ###
